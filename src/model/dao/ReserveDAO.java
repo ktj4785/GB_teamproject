@@ -1,5 +1,73 @@
 package model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import model.DBConnection;
+import model.dto.ReserveDTO;
+
 public class ReserveDAO {
+	Connection conn;
+	PreparedStatement ps;
+	ResultSet rs;
+	
+	public ReserveDAO() {
+		conn = DBConnection.getConnection();
+	}
+	
+
+	public ArrayList<ReserveDTO> getReserveListByUserid(String loginUser) {
+		ArrayList<ReserveDTO> list = new ArrayList<>();
+				
+		String sql = "select * from product where userId = ? ";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginUser);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				ReserveDTO reserve = new ReserveDTO(
+						rs.getInt("reserveId"),
+						rs.getInt("pnum"),
+						rs.getInt("price"),
+						rs.getBoolean("payment"),
+						rs.getString("userId"),
+						rs.getInt("scheduleId"),
+						rs.getString("seat")
+				);
+				list.add(reserve);
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		if(list.size() == 0) {
+			return null;
+		}
+		else {
+			return list;
+		}
+
+	}
+
+
+	public boolean deleteReserveByUserId(String loginUser) {
+		String sql = "delete from reserve where userId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginUser);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+	}
 
 }
+
