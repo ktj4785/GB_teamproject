@@ -84,6 +84,24 @@ public class UserDAO {
 		}
 		return false;
 	}
+
+	public boolean updateUserInfo(String column, String newInfo, String userId) {
+		String sql = "update set ?=? where userId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, column);
+			ps.setString(2, newInfo);
+			ps.setString(3, userId);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+		
+	}
 	
 
 }
