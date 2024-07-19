@@ -11,9 +11,9 @@ public class DBConnection {
 		if(conn == null) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				String url = "jdbc:mysql://localhost:3306/project";
+				String url = "jdbc:mysql://localhost:3306/teamproject";
 				String user = "root";
-				String password = "1234";
+				String password = "qkralgml12!@";
 				
 				conn = DriverManager.getConnection(url, user, password);
 			} catch (ClassNotFoundException e) {

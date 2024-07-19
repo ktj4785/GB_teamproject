@@ -5,11 +5,9 @@ import java.util.HashMap;
 
 import model.Session;
 import model.dao.AccountDAO;
-import model.dao.ProductDAO;
 import model.dao.ReserveDAO;
 import model.dao.UserDAO;
 import model.dto.AccountDTO;
-import model.dto.ProductDTO;
 import model.dto.ReserveDTO;
 import model.dto.UserDTO;
 
@@ -81,12 +79,18 @@ public class UserController {
 		}
 		return false;
 	}
-	public void updateInfo(int choice,String newInfo) {
+	public boolean updateInfo(int choice,String newInfo) {
 		UserDAO udao = new UserDAO();
-		String[] infoList = { 
+		String[] infoList = { "userPw","phone","userAddr"};
+		String userId = (String)Session.getData("loginUser");
+		return udao.updateUserInfo(infoList[choice],newInfo,userId);
+		
+	}
+	public boolean depositMoney(int money) {
+		AccountDAO acdao = new AccountDAO();
+		String userId = (String)Session.getData("loginUser");
+		return acdao.updateBalance(money,userId);
 		
 	}
 
 }
-
-
