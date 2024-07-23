@@ -11,7 +11,6 @@ import controller.UserController;
 import model.Session;
 import model.dto.AccountDTO;
 import model.dto.ReserveDTO;
-import model.dto.ScheduleDTO;
 import model.dto.UserDTO;
 
 public class UserInfoView {
@@ -22,7 +21,6 @@ public class UserInfoView {
 		HashMap<String, Object> infodata = ucon.getDetail(loginUser);
 		//돌려받은 HashMap 안에 있는 데이터 꺼내기
 		UserDTO user = (UserDTO)infodata.get("user");
-		ArrayList<ReserveDTO> list = (ArrayList<ReserveDTO>)infodata.get("list");
 		AccountDTO account = (AccountDTO)infodata.get("account");
 		
 		String balance 	= (String)infodata.get("balance");
@@ -79,40 +77,42 @@ public class UserInfoView {
 						}
 						break;
 					case 2:
-						if(list==null) {
-							System.out.println("예약된 영화가 없습니다");
+						if(reserveCnt==0) {
+							System.out.println("예약된 영화가 없습니다.");
 							break;
 						}
-						else {
-						System.out.println("예약번호	영화				영화시간		극장		인원		가격		좌석		결재여부");
-//							예약번호	영화				영화시간		극장		인원		가격		좌석		결재여부
+						ArrayList<ReserveDTO> list = (ArrayList<ReserveDTO>)infodata.get("list");
+						System.out.println("번호	영화			영화시간		극장			인원	가격		좌석		결재여부");
+						int count = 1;
 						for(ReserveDTO reserve : list) {
 //							스케쥴 불러와서 영화시간 시작 시간 적기, 
 //							근데 스케쥴 불러올때 그냥 불러오는게 아니고 영화와 극장의 이름도 제대로 데려와야함
 							ReserveController rcon = new ReserveController();
-							HashMap<String, Object> reserveDetail = rcon.getReserveDetail(reserve.getScheduleId());
-							System.out.print(reserve.getReserveId()+"	");
-							System.out.print((String)reserveDetail.get("movieName")+"		");
-							System.out.print((Timestamp)reserveDetail.get("startTime")+	"	");
-							System.out.print((String)reserveDetail.get("theaterName")+"	");
-							System.out.print(reserve.getpNum()+"	");
-							System.out.print(reserve.getPrice()+"	");
-							System.out.print(reserve.getSeat()+"	");
-							System.out.print(reserve.isPayment()+"\n");
+							HashMap<String, Object> reserveData = rcon.getReserveDetail(reserve.getScheduleId());
+							System.out.print(count+"\t");
+							System.out.print((String)reserveData.get("movieName")+"\t");
+							System.out.print((Timestamp)reserveData.get("scheduleStartTime")+"\t");
+							System.out.print((String)reserveData.get("theaterName")+"\t");
+							System.out.print(reserve.getpNum()+"\t");
+							System.out.print(reserve.getPrice()+"\t");
+							System.out.print(reserve.getSeat()+"\t");
+							System.out.print(reserve.isPayment()+"\t");
+							count++;
 						}
-						System.out.println("예약을 취소하시려면 1을 아니면 2를 눌러주세요");
-						int choice3 = sc.nextInt();
-						if(choice3==1){
-							System.out.println("취소할 영화의 예약번호를 눌러주세요");
-							int reserveId = sc.nextInt();
+						System.out.println("예약을 취소하시겠습니까?\n 1.예 2.아니오");
+						int choice2 = sc.nextInt();
+						System.out.println("최소할 예약의 번호를 입력하세요");
+						int select = sc.nextInt();
+						if(choice2==1) {
 							ReserveController rcon = new ReserveController();
-							if(rcon.cancelReserve(reserveId)) {
-								System.out.println("영화 예약이 취소되었습니다.");
-								break;
+							if(rcon.deleteReserve(list.get(select-1),Integer.parseInt(balance))) {
+								System.out.println("예약이 취소되었습니다");
 							}
+							
 						}
+						else if(choice2==2) {
+							break;
 						}
-						break;
 					case 3:
 						//input이랑 반복문 넣어야할듯
 						System.out.println("계좌번호 : "+account.getAccountId());
@@ -131,22 +131,25 @@ public class UserInfoView {
 							}
 						}
 						if(choice==2) {
-							System.out.println("변경하실 정보를 고르세요 1.계좌번호, 2.은행, 3.취소");
-							int choice3=sc.nextInt();
-							if(choice3==1) {
-								System.out.println("계좌번호를 입력하세요");
-								int newAccountId = sc.nextInt();
-								ucon.updateAccount(choice3,newAccountId+"");
-							}
-							if(choice3==2) {
-								System.out.println("은행명을 입력하세요");
-								String newBank = sc.next();
-								ucon.updateAccount(choice3,newBank);
-							}
-							else {
+//						계좌번호와 은행을 수정하는 뷰
+							System.out.println("수정하실 계좌의 정보를 고르세요\n 1.계좌 2.은행3.나가기");
+							int choice3 = sc.nextInt();
+							if(choice3==3) {
 								break;
-							}		
+							}
+							System.out.println("수정할 내용을 입력하세요");
+							String newdata = sc.next();
+							if(choice3==1) {
+								if(ucon.checkAccount(newdata)) {
+									System.out.println("중복된 계좌가 존재합니다");
+									break;
+								}
+							}
+							if(ucon.updateAccount(choice3,newdata)) {
+								System.out.println("수정되었습니다");
+							}
 						}
+						
 						break;
 				}
 			} catch (InputMismatchException e) {

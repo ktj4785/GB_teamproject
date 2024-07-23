@@ -90,18 +90,21 @@ public class AccountDAO {
 		return false;
 		
 	}
-	public boolean updateAccount(int col, String newdata,String userId) {
-		String[] cols = {"accountID", "bank"};
-		String sql = "update set"+ cols[col-1]+" = ? where userId = ?";
+
+	public boolean updateAccountData(String cols, String newdata, String userId) {
 		try {
-			ps = conn.prepareStatement(sql);
-			if(cols.equals("accountID")) {
-				ps.setInt(1,Integer.parseInt(newdata));
+			if(cols.equals("accountId")) {
+				String sql = "update set"+ cols+" = ? where userId = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, Integer.parseInt(newdata));
+				ps.setString(2, userId);
 			}
 			else if(cols.equals("bank")) {
-				ps.setString(1,newdata);	
+				String sql = "update set"+ cols+" = ? where userId = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, newdata);
+				ps.setString(2, userId);
 			}
-			ps.setString(2, userId);
 			
 			int result = ps.executeUpdate();
 							
@@ -110,7 +113,30 @@ public class AccountDAO {
 			System.out.println("DB오류가 발생하였습니다 " + e);
 		}
 		return false;
-		
 	}
+	public AccountDTO getAccountByAccountId(String accountId) {
+		String sql = "select * from account where accountId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, accountId);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				AccountDTO account = new AccountDTO(
+						rs.getInt("accountId"),
+						rs.getString("bank"),
+						rs.getInt("balance"),
+						rs.getString("userId")
+
+				);
+				return account;
+			}
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 "+ e);
+		}
+		return null;
+	}
+	
 
 }

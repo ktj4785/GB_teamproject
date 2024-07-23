@@ -52,7 +52,7 @@ public class UserController {
 		AccountDTO account = acdao.getAccountByUserid(loginUser);
 		ArrayList<ReserveDTO> list = rdao.getReserveListByUserid(loginUser);
 		int reserveCnt = list == null ? 0 : list.size();
-		String balance = account == null ? "연결된 계좌가 없습니다." : account.getBalance()+"";
+		String balance = account.getBalance()+"";
 		
 		
 		//위에서 조회된 모든 정보들을 HashMap에 담아서 리턴
@@ -94,11 +94,17 @@ public class UserController {
 		return acdao.updateBalance(money,userId);
 		
 	}
-	public boolean updateAccount(int col, String newinfo) {
+	public boolean updateAccount(int choice3, String newdata) {
+		String[] cols = {"accountId","bank"};
 		AccountDAO acdao = new AccountDAO();
 		String userId = (String)Session.getData("loginUser");
-		return(acdao.updateAccount(col,newinfo,userId))
+		return acdao.updateAccountData(cols[choice3-1],newdata,userId);
+	}
+	public boolean checkAccount(String newdata) {
+		AccountDAO acdao = new AccountDAO();
 		
+		return acdao.getAccountByAccountId(newdata)==null;
+		//없으면 true
 	}
 
 }

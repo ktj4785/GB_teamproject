@@ -6,32 +6,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.dto.MovieDTO;
-import model.dto.ScheduleDTO;
+import model.dto.UserDTO;
 
 public class MovieDAO {
 	Connection conn;
 	PreparedStatement ps;
 	ResultSet rs;
-	public MovieDTO getMovieById(int movieId) {
+
+	public MovieDTO getMovieByMovieId(int movieId) {
 		String sql = "select * from movie where movieId = ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, movieId);
 			
 			rs = ps.executeQuery();
-//			private int movieId;
-//			private String movieName;
-//			private String director;
-//			private String runningTime;
-//			private String genre;
-//			private double score;
+
 			//결과가 있다면 한 줄 꺼내서
 			if(rs.next()) {
 				//객체로 만들고
 				MovieDTO movie = new MovieDTO(
 						rs.getInt("movieId"),
 						rs.getString("movieName"),
-						rs.getString ("director"),
+						rs.getString("director"),
 						rs.getString("runningTime"),
 						rs.getString("genre"),
 						rs.getDouble("score")
