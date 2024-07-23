@@ -58,6 +58,8 @@ public class UserController {
 		//위에서 조회된 모든 정보들을 HashMap에 담아서 리턴
 		HashMap<String, Object> datas = new HashMap<>();
 		datas.put("user", user);
+		datas.put("list", list);
+		datas.put("account", account);
 		datas.put("reserveCnt", reserveCnt);
 		datas.put("balance", balance);
 		return datas;
@@ -81,15 +83,21 @@ public class UserController {
 	}
 	public boolean updateInfo(int choice,String newInfo) {
 		UserDAO udao = new UserDAO();
-		String[] infoList = { "userPw","phone","userAddr"};
+		String[] infoList = {"userPw","phone","userAddr"};
 		String userId = (String)Session.getData("loginUser");
-		return udao.updateUserInfo(infoList[choice],newInfo,userId);
+		return udao.updateUserInfo(infoList[choice-1],newInfo,userId);
 		
 	}
 	public boolean depositMoney(int money) {
 		AccountDAO acdao = new AccountDAO();
 		String userId = (String)Session.getData("loginUser");
 		return acdao.updateBalance(money,userId);
+		
+	}
+	public boolean updateAccount(int col, String newinfo) {
+		AccountDAO acdao = new AccountDAO();
+		String userId = (String)Session.getData("loginUser");
+		return(acdao.updateAccount(col,newinfo,userId))
 		
 	}
 

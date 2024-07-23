@@ -90,6 +90,27 @@ public class AccountDAO {
 		return false;
 		
 	}
-	
+	public boolean updateAccount(int col, String newdata,String userId) {
+		String[] cols = {"accountID", "bank"};
+		String sql = "update set"+ cols[col-1]+" = ? where userId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			if(cols.equals("accountID")) {
+				ps.setInt(1,Integer.parseInt(newdata));
+			}
+			else if(cols.equals("bank")) {
+				ps.setString(1,newdata);	
+			}
+			ps.setString(2, userId);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+		
+	}
 
 }

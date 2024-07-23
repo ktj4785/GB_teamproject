@@ -16,9 +16,14 @@ public class LoginView {
         String userPw = sc.next();
         
         if(ucon.login(userId,userPw)) {
+        	if(userId.equals("admin")) {
+        		System.out.println("관리자님 어서오세요~");
+//        		new AdminView();
+        	}
         	System.out.println(Session.getData("loginUser")+"님 어서오세요~");
         	new MainView();
         }
+
         else {
         	System.out.println("로그인에 실패하였습니다.");
         	return;

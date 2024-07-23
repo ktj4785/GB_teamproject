@@ -49,7 +49,7 @@ public class UserDAO {
 	}
 
 	public boolean insertUser(UserDTO user) {
-		String sql = "insert into user values(?,?,?,?,?,?)";
+		String sql = "insert into user values(?,?,?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			
@@ -86,12 +86,12 @@ public class UserDAO {
 	}
 
 	public boolean updateUserInfo(String column, String newInfo, String userId) {
-		String sql = "update set ?=? where userId = ?";
+		String sql = "UPDATE user SET "+column+" = ? WHERE userId = ?";
+		System.out.println(column);
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, column);
-			ps.setString(2, newInfo);
-			ps.setString(3, userId);
+			ps.setString(1, newInfo);
+			ps.setString(2, userId);
 			
 			int result = ps.executeUpdate();
 							

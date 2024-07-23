@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import model.DBConnection;
 import model.dto.ReserveDTO;
+import model.dto.ScheduleDTO;
 
 public class ReserveDAO {
 	Connection conn;
@@ -22,7 +23,7 @@ public class ReserveDAO {
 	public ArrayList<ReserveDTO> getReserveListByUserid(String loginUser) {
 		ArrayList<ReserveDTO> list = new ArrayList<>();
 				
-		String sql = "select * from product where userId = ? ";
+		String sql = "select * from reserve where userId = ? ";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -52,7 +53,33 @@ public class ReserveDAO {
 		}
 
 	}
+	public ReserveDTO getReserveByReserveid(int reserveId) {
+				
+		String sql = "select * from reserve where reserveId = ? ";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, reserveId);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				ReserveDTO reserve = new ReserveDTO(
+						rs.getInt("reserveId"),
+						rs.getInt("pnum"),
+						rs.getInt("price"),
+						rs.getBoolean("payment"),
+						rs.getString("userId"),
+						rs.getInt("scheduleId"),
+						rs.getString("seat")
+				);
+				return reserve;
+			}
+		} catch (SQLException e) {
+			System.out.println("DB오류입니다");
+		}
+		return null;
 
+	}
 
 	public boolean deleteReserveByUserId(String loginUser) {
 		String sql = "delete from reserve where userId = ?";
@@ -69,5 +96,24 @@ public class ReserveDAO {
 		return false;
 	}
 
+
+	public boolean deleteReserveByReserveId(int reserveId) {
+		String sql = "delete from reserve where reserveId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, reserveId);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+		
+	}
+
 }
+
+
 
