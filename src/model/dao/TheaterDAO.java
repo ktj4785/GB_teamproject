@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.DBConnection;
 import model.dto.TheaterDTO;
 import model.dto.UserDTO;
 
@@ -13,7 +14,9 @@ public class TheaterDAO {
 	Connection conn;
 	PreparedStatement ps;
 	ResultSet rs;
-
+	public TheaterDAO() {
+		conn = DBConnection.getConnection();
+	}
 	public TheaterDTO getTheaterByTheaterId(int theaterId) {
 		String sql = "select * from theater where theaterId = ?";
 		try {

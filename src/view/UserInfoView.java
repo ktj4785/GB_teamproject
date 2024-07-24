@@ -52,9 +52,9 @@ public class UserInfoView {
 							System.out.println(loginUser+"님 회원 탈퇴 처리 완료되었습니다.");
 							return;
 						}
-						else {
-							System.out.println("알수없는 오류 발생!");
-						}
+					}
+					else {
+						System.out.println("비밀번호가 틀렸습니다");
 					}
 				}
 				if(choice == 4) {
@@ -82,7 +82,7 @@ public class UserInfoView {
 							break;
 						}
 						ArrayList<ReserveDTO> list = (ArrayList<ReserveDTO>)infodata.get("list");
-						System.out.println("번호	영화			영화시간		극장			인원	가격		좌석		결재여부");
+						System.out.println("번호	영화		영화시간				극장			인원	가격		좌석		결재여부");
 						int count = 1;
 						for(ReserveDTO reserve : list) {
 //							스케쥴 불러와서 영화시간 시작 시간 적기, 
@@ -90,13 +90,13 @@ public class UserInfoView {
 							ReserveController rcon = new ReserveController();
 							HashMap<String, Object> reserveData = rcon.getReserveDetail(reserve.getScheduleId());
 							System.out.print(count+"\t");
-							System.out.print((String)reserveData.get("movieName")+"\t");
+							System.out.print((String)reserveData.get("movieName")+"\t\t");
 							System.out.print((Timestamp)reserveData.get("scheduleStartTime")+"\t");
 							System.out.print((String)reserveData.get("theaterName")+"\t");
 							System.out.print(reserve.getpNum()+"\t");
 							System.out.print(reserve.getPrice()+"\t");
 							System.out.print(reserve.getSeat()+"\t");
-							System.out.print(reserve.isPayment()+"\t");
+							System.out.print(reserve.isPayment()+"\n");
 							count++;
 						}
 						System.out.println("예약을 취소하시겠습니까?\n 1.예 2.아니오");
@@ -154,6 +154,7 @@ public class UserInfoView {
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("정수만 입력해주세요");
+				sc.next();
 			}
 		}
 		

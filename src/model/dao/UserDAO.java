@@ -87,7 +87,6 @@ public class UserDAO {
 
 	public boolean updateUserInfo(String column, String newInfo, String userId) {
 		String sql = "UPDATE user SET "+column+" = ? WHERE userId = ?";
-		System.out.println(column);
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, newInfo);

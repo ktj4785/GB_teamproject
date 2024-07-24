@@ -20,7 +20,7 @@ public class AddReView {
 			}
 			else if(choice==1) {
 				ArrayList<ReviewDTO> rvlist =  rvcon.getMyReview();
-				if(rvlist.size()==0) {
+				if(rvlist==null || rvlist.size()==0) {
 					System.out.println("리뷰가 존재하지 않습니다");
 					break;
 				}
@@ -47,10 +47,13 @@ public class AddReView {
 					System.out.println("수정할 리뷰의 번호를 입력하세요");
 					int select = sc.nextInt();
 					System.out.println("수정할 내용을 입력하세요");
-					String newdata = sc.next();
+					String newdata = sc.nextLine();
+					sc.next();
 					if(rvcon.updateReview(choice3,(rvlist.get(select-1)).getReviewId(),newdata)) {
 						System.out.println("리뷰가 수정되었습니다.");
+						break;
 					}
+					break;
 				}
 				if(choice2==2) {
 					System.out.println("삭제할 리뷰의 번호를 입력하세요");
@@ -63,7 +66,7 @@ public class AddReView {
 			}
 			else if(choice==2) {
 				ArrayList<ReserveDTO> canlist = rvcon.getAvailableReview();
-				if(canlist.size()==0) {
+				if(canlist==null) {
 					System.out.println("리뷰 추가가 가능한 영화가 없습니다");
 					break;
 				}
@@ -78,11 +81,12 @@ public class AddReView {
 				int select_count = sc.nextInt();
 				System.out.println("리뷰의 평점을 입력하세요");
 				int grade = sc.nextInt();
-				sc.next();
 				System.out.println("리뷰의 한줄평을 입력하세요");
 				String reviewText = sc.nextLine();
+				sc.next();
 				if(rvcon.addReview((canlist.get(select_count-1)).getReserveId(),	grade,reviewText)) {
 					System.out.println("리뷰가 등록되었습니다.");
+					break;
 				}
 					
 				

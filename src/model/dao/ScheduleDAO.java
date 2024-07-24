@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.DBConnection;
 import model.dto.ScheduleDTO;
 import model.dto.UserDTO;
 
@@ -12,6 +13,9 @@ public class ScheduleDAO {
 	Connection conn;
 	PreparedStatement ps;
 	ResultSet rs;
+	public ScheduleDAO() {
+		conn = DBConnection.getConnection();
+	}
 	public ScheduleDTO getSchedule(int scheduleId) {
 		String sql = "select * from schedule where scheduleId = ?";
 		try {

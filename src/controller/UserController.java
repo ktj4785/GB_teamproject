@@ -70,9 +70,9 @@ public class UserController {
 		ReserveDAO rdao = new ReserveDAO();
 		AccountDAO acdao = new AccountDAO();
 		
-		udao.deleteUser(loginUser);
 		rdao.deleteReserveByUserId(loginUser);
 		acdao.deleteAccountByUserId(loginUser);
+		udao.deleteUser(loginUser);
 		
 		//탈퇴되었으므로 로그인 된 정보를 유지하는 세션도 초기화를 진행해야 한다.
 		Session.setData("loginUser", null);
@@ -103,7 +103,7 @@ public class UserController {
 	public boolean checkAccount(String newdata) {
 		AccountDAO acdao = new AccountDAO();
 		
-		return acdao.getAccountByAccountId(newdata)==null;
+		return acdao.getAccountByAccountId(newdata)!=null;
 		//없으면 true
 	}
 

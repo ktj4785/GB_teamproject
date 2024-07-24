@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.DBConnection;
 import model.dto.MovieDTO;
 import model.dto.UserDTO;
 
@@ -12,7 +13,9 @@ public class MovieDAO {
 	Connection conn;
 	PreparedStatement ps;
 	ResultSet rs;
-
+	public MovieDAO() {
+		conn = DBConnection.getConnection();
+	}
 	public MovieDTO getMovieByMovieId(int movieId) {
 		String sql = "select * from movie where movieId = ?";
 		try {

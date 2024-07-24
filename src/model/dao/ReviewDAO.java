@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import model.DBConnection;
 import model.dto.ReserveDTO;
 import model.dto.ReviewDTO;
 import model.dto.UserDTO;
@@ -16,6 +17,9 @@ public class ReviewDAO {
 	Connection conn;
 	PreparedStatement ps;
 	ResultSet rs;
+	public ReviewDAO() {
+		conn = DBConnection.getConnection();
+	}
 	public ArrayList<ReviewDTO> getReviewListByUserid(String userId) {
 		String sql = "SELECT r.*, m.movieName\n"
 				+ "FROM review r\n"
@@ -36,7 +40,7 @@ public class ReviewDAO {
 						rs.getString("review"),
 						rs.getDouble("grade"),
 						rs.getTimestamp("createtime"),
-						rs.getInt("scheduleId"),
+						rs.getInt("reserveId"),
 						rs.getString("userId"),
 						rs.getString("movieName")
 				);
@@ -50,7 +54,7 @@ public class ReviewDAO {
 	}
 
 	public boolean updateReviewByreviewId(String cols, int reviewId, String newdata) {
-		String sql = "UPDATE user SET "+cols+" = ? WHERE reviewId = ?";
+		String sql = "UPDATE review SET "+cols+" = ? WHERE reviewId = ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, newdata);
@@ -82,7 +86,7 @@ public class ReviewDAO {
 	}
 
 	public ArrayList<ReserveDTO> getAvailableReviewByUserid(String userId) {
-		String sql = "SELECT r.id, m.movieName\n"
+		String sql = "SELECT r.reserveId, m.movieName\n"
 				+ "FROM reserve r\n"
 				+ "LEFT JOIN review rv ON r.reserveId = rv.reserveId\n"
 				+ "JOIN schedule s ON r.scheduleId = s.scheduleId\n"
@@ -112,7 +116,7 @@ public class ReviewDAO {
 	}
 
 	public boolean insertReview(String userId, int reserveId, int grade, String reviewText, Timestamp nowtime) {
-		String sql = "insert into review(review,grade,createtime,reservId,userId) values(?,?,?,?,?)";
+		String sql = "insert into review(review,grade,createtime,reserveId,userId) values(?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			

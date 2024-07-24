@@ -18,7 +18,7 @@ public class ReviewController {
 
 	public boolean updateReview(int choice2, int reviewId, String newdata) {
 		ReviewDAO rvdao = new ReviewDAO();
-		String[] cols = { "review", "grade"};
+		String[] cols = { "grade","review"};
 		return rvdao.updateReviewByreviewId(cols[choice2-1],reviewId,newdata);
 	}
 
