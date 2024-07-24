@@ -12,6 +12,7 @@ public class IndexView {
             System.out.println("1.회원가입\n2.로그인\n3.나가기");
             try {
                 choice = sc.nextInt();
+                sc.nextLine();
                 if(choice == 1) {
                      new JoinView();
                 }
@@ -25,7 +26,9 @@ public class IndexView {
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다, 메뉴의 숫자 번호를 입력하세요");
                 sc.next(); // 입력 스트림을 비워줌
+                sc.nextLine();
             }
+            
         }
     }
 }

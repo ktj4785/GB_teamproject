@@ -66,4 +66,6 @@ public class MovieDTO {
 	public void setScore(double score) {
 		this.score = score;
 	}
+
 }
+
