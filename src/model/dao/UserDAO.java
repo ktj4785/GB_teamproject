@@ -49,7 +49,7 @@ public class UserDAO {
 	}
 
 	public boolean insertUser(UserDTO user) {
-		String sql = "insert into user values(?,?,?,?,?,?)";
+		String sql = "insert into user values(?,?,?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			
@@ -83,6 +83,23 @@ public class UserDAO {
 			System.out.println("DB오류가 발생하였습니다 " + e);
 		}
 		return false;
+	}
+
+	public boolean updateUserInfo(String column, String newInfo, String userId) {
+		String sql = "UPDATE user SET "+column+" = ? WHERE userId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, newInfo);
+			ps.setString(2, userId);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+		
 	}
 	
 
