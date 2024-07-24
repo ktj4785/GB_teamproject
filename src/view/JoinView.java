@@ -29,6 +29,7 @@ public class JoinView {
 					try {
 						System.out.println("나이 : ");
 						userAge = sc.nextInt();
+						sc.nextLine();
 						break;
 					} catch (InputMismatchException e) {
 						System.out.println("나이에는 정수형만 입력해주세요");
@@ -39,11 +40,14 @@ public class JoinView {
 				String socialNum = sc.next();
 				System.out.println("전화번호 : ");
 				String phone = sc.next();
+				sc.nextLine();
 				System.out.println("주소 : ");
-				String userAddr = sc.next();
-				sc.next();
+
+				String userAddr = sc.nextLine();
+
 				System.out.println("계좌번호를 입력하세요");
 				int accountId = sc.nextInt();
+				sc.nextLine();
 				System.out.println("은행명을 입력하세요");
 				String bank = sc.next();
 				UserDTO user = new UserDTO(userId, userPw, userName, userAge, socialNum, phone, userAddr);

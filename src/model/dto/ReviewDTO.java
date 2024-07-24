@@ -1,25 +1,27 @@
 package model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReviewDTO {
 	private int reviewId;
 	private String review;
 	private double grade;
-	private Date createtime;
-	private String socialNum;
-	private int movieId;
+	private Timestamp createtime;
+	private int scheduleId;
 	private String userId;
+	private String movieName;
 	
-	public ReviewDTO(int reviewId, String review, double grade, Date createtime, String socialNum, int movieId,
-			String userId) {
+
+	public ReviewDTO(int reviewId, String review, double grade, Timestamp createtime, int scheduleId,
+			String userId,String movieName) {
 		this.reviewId = reviewId;
 		this.review = review;
 		this.grade = grade;
 		this.createtime = createtime;
-		this.socialNum = socialNum;
-		this.movieId = movieId;
+		this.scheduleId = scheduleId;
 		this.userId = userId;
+		this.movieName = movieName;
 	}
 
 	public int getReviewId() {
@@ -46,28 +48,20 @@ public class ReviewDTO {
 		this.grade = grade;
 	}
 
-	public Date getCreatetime() {
+	public Timestamp getCreatetime() {
 		return createtime;
 	}
 
-	public void setCreatetime(Date createtime) {
+	public void setCreatetime(Timestamp createtime) {
 		this.createtime = createtime;
 	}
 
-	public String getSocialNum() {
-		return socialNum;
+	public int getScheduleId() {
+		return scheduleId;
 	}
 
-	public void setSocialNum(String socialNum) {
-		this.socialNum = socialNum;
-	}
-
-	public int getMovieId() {
-		return movieId;
-	}
-
-	public void setMovieId(int movieId) {
-		this.movieId = movieId;
+	public void setScheduleId(int scheduleId) {
+		this.scheduleId = scheduleId;
 	}
 
 	public String getUserId() {
@@ -77,5 +71,12 @@ public class ReviewDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	
+	public String getMovieName() {
+		return movieName;
+	}
+
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+
 }

@@ -85,13 +85,13 @@ public class UserDAO {
 		return false;
 	}
 
+
 	public boolean updateUserInfo(String column, String newInfo, String userId) {
-		String sql = "update set ?=? where userId = ?";
+		String sql = "UPDATE user SET "+column+" = ? WHERE userId = ?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, column);
-			ps.setString(2, newInfo);
-			ps.setString(3, userId);
+			ps.setString(1, newInfo);
+			ps.setString(2, userId);
 			
 			int result = ps.executeUpdate();
 							
@@ -102,6 +102,7 @@ public class UserDAO {
 		return false;
 		
 	}
+
 	
 
 }

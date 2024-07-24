@@ -52,12 +52,14 @@ public class UserController {
 		AccountDTO account = acdao.getAccountByUserid(loginUser);
 		ArrayList<ReserveDTO> list = rdao.getReserveListByUserid(loginUser);
 		int reserveCnt = list == null ? 0 : list.size();
-		String balance = account == null ? "연결된 계좌가 없습니다." : account.getBalance()+"";
+		String balance = account.getBalance()+"";
 		
 		
 		//위에서 조회된 모든 정보들을 HashMap에 담아서 리턴
 		HashMap<String, Object> datas = new HashMap<>();
 		datas.put("user", user);
+		datas.put("list", list);
+		datas.put("account", account);
 		datas.put("reserveCnt", reserveCnt);
 		datas.put("balance", balance);
 		return datas;
@@ -68,9 +70,9 @@ public class UserController {
 		ReserveDAO rdao = new ReserveDAO();
 		AccountDAO acdao = new AccountDAO();
 		
-		udao.deleteUser(loginUser);
 		rdao.deleteReserveByUserId(loginUser);
 		acdao.deleteAccountByUserId(loginUser);
+		udao.deleteUser(loginUser);
 		
 		//탈퇴되었으므로 로그인 된 정보를 유지하는 세션도 초기화를 진행해야 한다.
 		Session.setData("loginUser", null);
@@ -81,9 +83,10 @@ public class UserController {
 	}
 	public boolean updateInfo(int choice,String newInfo) {
 		UserDAO udao = new UserDAO();
-		String[] infoList = { "userPw","phone","userAddr"};
+
+		String[] infoList = {"userPw","phone","userAddr"};
 		String userId = (String)Session.getData("loginUser");
-		return udao.updateUserInfo(infoList[choice],newInfo,userId);
+		return udao.updateUserInfo(infoList[choice-1],newInfo,userId);
 		
 	}
 	public boolean depositMoney(int money) {
@@ -91,6 +94,18 @@ public class UserController {
 		String userId = (String)Session.getData("loginUser");
 		return acdao.updateBalance(money,userId);
 		
+	}
+	public boolean updateAccount(int choice3, String newdata) {
+		String[] cols = {"accountId","bank"};
+		AccountDAO acdao = new AccountDAO();
+		String userId = (String)Session.getData("loginUser");
+		return acdao.updateAccountData(cols[choice3-1],newdata,userId);
+	}
+	public boolean checkAccount(String newdata) {
+		AccountDAO acdao = new AccountDAO();
+		
+		return acdao.getAccountByAccountId(newdata)!=null;
+		//없으면 true
 	}
 
 }

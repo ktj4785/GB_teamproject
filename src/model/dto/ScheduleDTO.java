@@ -15,9 +15,23 @@ public class ScheduleDTO {
 	private double avgScore;
 	private String theaterName;
 	private String dimension;
+	private int theaterId;
+	private int	movieId;
 
 	public ScheduleDTO() {
 	}
+	
+	
+	public ScheduleDTO(int scheduleId, Timestamp startTime, Timestamp endTime, int leftSeat, int theaterId,
+			int movieId) {
+		this.scheduleId = scheduleId;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.leftSeat = leftSeat;
+		this.theaterId = theaterId;
+		this.movieId = movieId;
+	}
+
 
 	public ScheduleDTO(String movieName, String director, String runningTime, String genre, Double avgScore) {
 		this.movieName = movieName;
@@ -145,8 +159,28 @@ public class ScheduleDTO {
 	public void setDimension(String dimension) {
 		this.dimension = dimension;
 	}
-	
+
+	public int getTheaterId() {
+		return theaterId;
+	}
+
+
+	public void setTheaterId(int theaterId) {
+		this.theaterId = theaterId;
+	}
+
+
+	public int getMovieId() {
+		return movieId;
+	}
+
+
+	public void setMovieId(int movieId) {
+		this.movieId = movieId;
+	}
+
 
 
 	
 }
+
