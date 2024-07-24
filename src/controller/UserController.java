@@ -83,6 +83,7 @@ public class UserController {
 	}
 	public boolean updateInfo(int choice,String newInfo) {
 		UserDAO udao = new UserDAO();
+
 		String[] infoList = {"userPw","phone","userAddr"};
 		String userId = (String)Session.getData("loginUser");
 		return udao.updateUserInfo(infoList[choice-1],newInfo,userId);
@@ -108,5 +109,3 @@ public class UserController {
 	}
 
 }
-
-

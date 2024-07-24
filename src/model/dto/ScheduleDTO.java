@@ -159,6 +159,7 @@ public class ScheduleDTO {
 	public void setDimension(String dimension) {
 		this.dimension = dimension;
 	}
+
 	public int getTheaterId() {
 		return theaterId;
 	}
@@ -182,3 +183,4 @@ public class ScheduleDTO {
 
 	
 }
+

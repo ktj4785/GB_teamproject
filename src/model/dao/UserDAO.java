@@ -85,6 +85,7 @@ public class UserDAO {
 		return false;
 	}
 
+
 	public boolean updateUserInfo(String column, String newInfo, String userId) {
 		String sql = "UPDATE user SET "+column+" = ? WHERE userId = ?";
 		try {
@@ -101,10 +102,7 @@ public class UserDAO {
 		return false;
 		
 	}
+
 	
 
 }
-
-
-
-

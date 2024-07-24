@@ -42,7 +42,9 @@ public class JoinView {
 				String phone = sc.next();
 				sc.nextLine();
 				System.out.println("주소 : ");
+
 				String userAddr = sc.nextLine();
+
 				System.out.println("계좌번호를 입력하세요");
 				int accountId = sc.nextInt();
 				sc.nextLine();

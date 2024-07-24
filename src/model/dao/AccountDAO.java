@@ -75,6 +75,7 @@ public class AccountDAO {
 	}
 
 	public boolean updateBalance(int c,String userId) {
+
 		String sql = "update account set balance = ? where userId = ?";
 		try {
 			ps = conn.prepareStatement(sql);
@@ -141,4 +142,6 @@ public class AccountDAO {
 	}
 	
 
+
 }
+

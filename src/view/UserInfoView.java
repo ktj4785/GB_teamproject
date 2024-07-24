@@ -36,13 +36,16 @@ public class UserInfoView {
 		System.out.println("계좌 잔액 : " +balance);
 		System.out.println("==============================");
 		while(true) {
+
 			System.out.println("1. 내 정보 수정\n2. 예약 관리\n3. 계좌 관리\n4. 메인으로\n5. 회원 탈퇴");
+
 			try {
 				int choice = sc.nextInt();
 				if(choice == 5) {
 					//회원 탈퇴
 					System.out.print("비밀번호 재 입력 : ");
 					String userpw = sc.next();
+
 					infodata = ucon.getDetail(loginUser);
 					user = (UserDTO)infodata.get("user");
 					//비번을 바꾼 경우 데이터베이스의 정보와
@@ -52,6 +55,7 @@ public class UserInfoView {
 							System.out.println(loginUser+"님 회원 탈퇴 처리 완료되었습니다.");
 							return;
 						}
+
 					}
 					else {
 						System.out.println("비밀번호가 틀렸습니다");
@@ -63,6 +67,7 @@ public class UserInfoView {
 				}
 				switch(choice) {
 					case 1:
+
 						//input이랑 반복문 넣어야할듯
 						System.out.println("수정할 정보를 입력하세요");
 						System.out.println("1.비밀번호 수정\n2.핸드폰 번호\n3.주소");
@@ -118,6 +123,7 @@ public class UserInfoView {
 						System.out.println("계좌번호 : "+account.getAccountId());
 						System.out.println("은행 : "+account.getBank());
 						System.out.println("잔액 : "+account.getBalance());
+
 						System.out.println("1.충전하기 2.계좌수정 3.나가기");
 						choice=sc.nextInt();
 						if(choice==1) {
@@ -155,6 +161,7 @@ public class UserInfoView {
 			} catch (InputMismatchException e) {
 				System.out.println("정수만 입력해주세요");
 				sc.next();
+
 			}
 		}
 		
