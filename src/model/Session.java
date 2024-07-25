@@ -12,4 +12,3 @@ public class Session {
 		return datas.get(key);
 	}
 }
-

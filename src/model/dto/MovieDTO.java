@@ -1,22 +1,22 @@
 package model.dto;
 
 public class MovieDTO {
-	private int movieId;
-	private String movieName;
-	private String director;
-	private String runningTime;
-	private String genre;
-	private double score;
+	int movieId;
+	String movieName;
+	String director;
+	String runningTime;
+	String genre;
+	double avgScore;
 	
 	public MovieDTO() {}
 
-	public MovieDTO(int movieId, String movieName, String director, String runningTime, String genre, double score) {
+	public MovieDTO(int movieId, String movieName, String director, String runningTime, String genre, double avgScore) {
 		this.movieId = movieId;
 		this.movieName = movieName;
 		this.director = director;
 		this.runningTime = runningTime;
 		this.genre = genre;
-		this.score = score;
+		this.avgScore = avgScore;
 	}
 
 	public int getMovieId() {
@@ -59,13 +59,13 @@ public class MovieDTO {
 		this.genre = genre;
 	}
 
-	public double getScore() {
-		return score;
+	public double getAvgScore() {
+		return avgScore;
 	}
 
-	public void setScore(double score) {
-		this.score = score;
+	public void setAvgScore(double avgScore) {
+		this.avgScore = avgScore;
 	}
-
+	
+	
 }
-
