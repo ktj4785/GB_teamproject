@@ -19,7 +19,8 @@ public class MovieDAO {
 	public MovieDAO() {
 		conn = DBConnection.getConnection();
 	}
-
+	//영화 리스트를 획득함
+	//쿼리문 수정 필요
 	public ArrayList<MovieDTO> getlist(int choice) {
 
 		ArrayList<MovieDTO> list = new ArrayList<>();
@@ -62,7 +63,7 @@ public class MovieDAO {
 	}
 
 	
-	
+	//영화 이름으로 검색하고 리스트 획득 
 	public ArrayList<MovieDTO> getMovieName(String ans) {
 		
 		ArrayList<MovieDTO> list = new ArrayList<>();
@@ -101,7 +102,7 @@ public class MovieDAO {
 		}
 		return list;
 	}
-
+	//영화 배우이름으로 검색하고 획득
 	public ArrayList<MovieDTO> getActorName(String ans) {
 
 		ArrayList<MovieDTO> list = new ArrayList<>();
@@ -150,7 +151,7 @@ public class MovieDAO {
 		return list;
 	}
 	
-	
+	//영화 감독이름으로 검색하고 획득
 	public ArrayList<MovieDTO> getDirectorName(String ans) {
 		
 		ArrayList<MovieDTO> list = new ArrayList<>();
@@ -188,8 +189,8 @@ public class MovieDAO {
 			System.err.println(e);
 		}
 		return list;
-
-
+	}
+	//영화 아이디로 영화 정보 획득
 	public MovieDTO getMovieByMovieId(int movieId) {
 		String sql = "select * from movie where movieId = ?";
 		try {

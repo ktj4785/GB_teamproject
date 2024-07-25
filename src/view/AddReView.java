@@ -65,14 +65,14 @@ public class AddReView {
 				}
 			}
 			else if(choice==2) {
-				ArrayList<ReserveDTO> canlist = rvcon.getAvailableReview();
+				ArrayList<ReviewDTO> canlist = rvcon.getAvailableReview();
 				if(canlist==null) {
 					System.out.println("리뷰 추가가 가능한 영화가 없습니다");
 					break;
 				}
 				System.out.println("리뷰 추가가 가능한 영화의 목록");
 				int count = 1;
-				for(ReserveDTO rv : canlist) {
+				for(ReviewDTO rv : canlist) {
 				
 				System.out.println(count +" 제목 + "+rv.getMovieName());
 				count++;
@@ -81,10 +81,11 @@ public class AddReView {
 				int select_count = sc.nextInt();
 				System.out.println("리뷰의 평점을 입력하세요");
 				int grade = sc.nextInt();
+				sc.nextLine();
 				System.out.println("리뷰의 한줄평을 입력하세요");
 				String reviewText = sc.nextLine();
-				sc.next();
-				if(rvcon.addReview((canlist.get(select_count-1)).getReserveId(),	grade,reviewText)) {
+				System.out.println(reviewText);
+				if(rvcon.addReview((canlist.get(select_count-1)).getmovieId(),	grade,reviewText)) {
 					System.out.println("리뷰가 등록되었습니다.");
 					break;
 				}

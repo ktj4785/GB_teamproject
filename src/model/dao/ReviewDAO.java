@@ -20,13 +20,12 @@ public class ReviewDAO {
 	public ReviewDAO() {
 		conn = DBConnection.getConnection();
 	}
+//	유저아이디를 기반으로 유저가 쓴 리뷰 리스트 불러오기
 	public ArrayList<ReviewDTO> getReviewListByUserid(String userId) {
-		String sql = "SELECT r.*, m.movieName\n"
-				+ "FROM review r\n"
-				+ "JOIN reserve res ON r.reserveId = res.reserveId\n"
-				+ "JOIN schedule s ON res.scheduleId = s.scheduleId\n"
-				+ "JOIN movie m ON s.movieId = m.movieId\n"
-				+ "WHERE r.userId = ?";
+	    String sql = "SELECT r.*, m.movieName " +
+                "FROM review r " +
+                "JOIN movie m ON r.movieID = m.movieId " +
+                "WHERE r.userId = ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
@@ -40,7 +39,7 @@ public class ReviewDAO {
 						rs.getString("review"),
 						rs.getDouble("grade"),
 						rs.getTimestamp("createtime"),
-						rs.getInt("reserveId"),
+						rs.getInt("movieId"),
 						rs.getString("userId"),
 						rs.getString("movieName")
 				);
@@ -52,7 +51,7 @@ public class ReviewDAO {
 		}
 		return null;
 	}
-
+	//리뷰아이디를 보고 리뷰 정보 수정
 	public boolean updateReviewByreviewId(String cols, int reviewId, String newdata) {
 		String sql = "UPDATE review SET "+cols+" = ? WHERE reviewId = ?";
 		try {
@@ -68,7 +67,7 @@ public class ReviewDAO {
 		}
 		return false;
 	}
-
+	//리뷰아이디를 기반으로 리뷰 삭제
 	public boolean deleteReviewByreviewId(int reviewId) {
 		String sql = "delete from review where reviewId = ?";
 		try {
@@ -84,29 +83,38 @@ public class ReviewDAO {
 		return false;
 		
 	}
-
-	public ArrayList<ReserveDTO> getAvailableReviewByUserid(String userId) {
-		String sql = "SELECT r.reserveId, m.movieName\n"
-				+ "FROM reserve r\n"
-				+ "LEFT JOIN review rv ON r.reserveId = rv.reserveId\n"
-				+ "JOIN schedule s ON r.scheduleId = s.scheduleId\n"
-				+ "JOIN movie m ON s.movieId = m.movieId\n"
-				+ "WHERE rv.reserveId IS NULL\n"
-				+ "AND r.payment = TRUE\n"
-				+ "AND r.userId = ?";
+	//유저아이디를 보고 리뷰 가능한거 확인 
+	public ArrayList<ReviewDTO> getAvailableReviewByUserid(String userId) {
+	    String sql = "SELECT " +
+                "r.reserveId, " +
+                "s.scheduleId, " +
+                "m.movieId, " +
+                "m.movieName " +
+                "FROM " +
+                "reserve r " +
+                "JOIN " +
+                "schedule s ON r.scheduleId = s.scheduleId " +
+                "JOIN " +
+                "movie m ON s.movieId = m.movieId " +
+                "LEFT JOIN " +
+                "review rv ON r.userId = rv.userId AND m.movieId = rv.movieID " +
+                "WHERE " +
+                "r.userId = ? " +
+                "AND rv.movieID IS NULL " +
+                "AND r.payment = TRUE";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
 			
 			rs = ps.executeQuery();
-			ArrayList<ReserveDTO> rvlist = new ArrayList<>();
+			ArrayList<ReviewDTO> rvlist = new ArrayList<>();
 			while(rs.next()) {
 				//객체로 만들고
-				ReserveDTO reserve = new ReserveDTO(
-						rs.getInt("reserveId"),
+				ReviewDTO review = new ReviewDTO(
+						rs.getInt("movieId"),
 						rs.getString("movieName")
 				);
-				rvlist.add(reserve);
+				rvlist.add(review);
 			}
 			return rvlist;
 		} catch (SQLException e) {
@@ -114,16 +122,16 @@ public class ReviewDAO {
 		}
 		return null;
 	}
-
-	public boolean insertReview(String userId, int reserveId, int grade, String reviewText, Timestamp nowtime) {
-		String sql = "insert into review(review,grade,createtime,reserveId,userId) values(?,?,?,?,?)";
+	//리뷰 생성
+	public boolean insertReview(String userId, int movieId, int grade, String reviewText, Timestamp nowtime) {
+		String sql = "insert into review(review,grade,createtime,movieId,userId) values(?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			
 			ps.setString(1, reviewText);
 			ps.setInt(2, grade);
 			ps.setTimestamp(3, nowtime);
-			ps.setInt(4, reserveId);
+			ps.setInt(4, movieId);
 			ps.setString(5, userId);
 
 			
@@ -140,11 +148,3 @@ public class ReviewDAO {
 	
 
 }
-
-////
-//SELECT r.*, m.movieName
-//FROM review r
-//JOIN reserve res ON r.reserveId = res.reserveId
-//JOIN schedule s ON res.scheduleId = s.scheduleId
-//JOIN movie m ON s.movieId = m.movieId
-//WHERE r.reviewId = ?;

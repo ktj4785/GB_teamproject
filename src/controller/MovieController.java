@@ -32,10 +32,7 @@ public class MovieController {
 		MovieDAO mdao = new MovieDAO();
 		return mdao.getDirectorName(ans);
 	}
-}
 
-
-public class MovieController {
 
 	//영화관 주소 검색 메서드
 	public ArrayList<TheaterDTO> search(String theaterName) {

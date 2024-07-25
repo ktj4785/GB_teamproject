@@ -9,7 +9,6 @@ public class ReserveDTO {
 	private String userId;
 	private int scheduleId;
 	private String seat;
-	private String movieName;
 	
 	public ReserveDTO(int reserveId, int pNum, int price, boolean payment, String userId, int scheduleId,String seat) {
 		this.reserveId = reserveId;
@@ -21,12 +20,6 @@ public class ReserveDTO {
 		this.seat = seat;
 	}
 	
-
-	public ReserveDTO(int reserveId, String movieName) {
-		this.reserveId = reserveId;
-		this.movieName = movieName;
-	}
-
 
 	public int getReserveId() {
 		return reserveId;
@@ -85,14 +78,6 @@ public class ReserveDTO {
 	}
 
 
-	public String getMovieName() {
-		return movieName;
-	}
 
-
-	public void setMovieName(String movieName) {
-		this.movieName = movieName;
-	}
-	
 	
 }

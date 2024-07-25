@@ -16,7 +16,7 @@ public class AccountDAO {
 	public AccountDAO() {
 		conn=DBConnection.getConnection();
 	}
-
+	//유저아이디를 이용해 계좌 획득
 	public AccountDTO getAccountByUserid(String loginUser) {
 		String sql = "select * from account where userId = ?";
 		try {
@@ -40,7 +40,7 @@ public class AccountDAO {
 		}
 		return null;
 	}
-
+	// 계좌 삭제
 	public boolean deleteAccountByUserId(String loginUser)  {
 		String sql = "delete from account where userId = ?";
 		try {
@@ -55,7 +55,7 @@ public class AccountDAO {
 		}
 		return false;
 	}
-
+	// 계좌 생성(회원가입시)
 	public boolean insertAccount(AccountDTO account) {
 		String sql = "insert into account (accountId,bank,userId) values (?,?,?)";
 		try {
@@ -73,7 +73,7 @@ public class AccountDAO {
 		}
 		return false;
 	}
-
+	// 잔액 수정
 	public boolean updateBalance(int c,String userId) {
 
 		String sql = "update account set balance = ? where userId = ?";
@@ -91,7 +91,7 @@ public class AccountDAO {
 		return false;
 		
 	}
-
+	// 계좌 정보 수정
 	public boolean updateAccountData(String cols, String newdata, String userId) {
 		try {
 			if(cols.equals("accountId")) {
@@ -117,6 +117,7 @@ public class AccountDAO {
 		}
 		return false;
 	}
+	// 계좌번호를 이용해 계좌 정보 획득
 	public AccountDTO getAccountByAccountId(String accountId) {
 		String sql = "select * from account where accountId = ?";
 		try {

@@ -65,6 +65,7 @@ public class UserController {
 		return datas;
 		
 	}
+	//탈퇴 메소드 유저가 탈퇴하면 유저와 연관있는 예약, 계좌 테이블도 건드려야함(리뷰도 지워야하나?)
 	public boolean leaveId(String loginUser) {
 		UserDAO udao = new UserDAO();
 		ReserveDAO rdao = new ReserveDAO();
@@ -81,6 +82,7 @@ public class UserController {
 		}
 		return false;
 	}
+	//	유저 정보 수정
 	public boolean updateInfo(int choice,String newInfo) {
 		UserDAO udao = new UserDAO();
 
@@ -89,18 +91,23 @@ public class UserController {
 		return udao.updateUserInfo(infoList[choice-1],newInfo,userId);
 		
 	}
+	// 계좌 충전 메소드
 	public boolean depositMoney(int money) {
 		AccountDAO acdao = new AccountDAO();
 		String userId = (String)Session.getData("loginUser");
 		return acdao.updateBalance(money,userId);
 		
 	}
+	
+	// 계좌 수정 메소드
 	public boolean updateAccount(int choice3, String newdata) {
 		String[] cols = {"accountId","bank"};
 		AccountDAO acdao = new AccountDAO();
 		String userId = (String)Session.getData("loginUser");
 		return acdao.updateAccountData(cols[choice3-1],newdata,userId);
 	}
+	
+	// 계좌번호를 수정할때 계좌번호는 동일하면 안되는 기본키이기 때문에 확인하는 과정을 거치기 위한 메소드
 	public boolean checkAccount(String newdata) {
 		AccountDAO acdao = new AccountDAO();
 		

@@ -19,7 +19,7 @@ public class ReserveDAO {
 		conn = DBConnection.getConnection();
 	}
 	
-
+//	유저 아이디로 예약 정보 획득
 	public ArrayList<ReserveDTO> getReserveListByUserid(String loginUser) {
 		ArrayList<ReserveDTO> list = new ArrayList<>();
 				
@@ -54,7 +54,7 @@ public class ReserveDAO {
 
 	}
 
-
+// 	예약 삭제(유저아이디기반)
 	public boolean deleteReserveByUserId(String loginUser) {
 		String sql = "delete from reserve where userId = ?";
 		try {
@@ -70,7 +70,7 @@ public class ReserveDAO {
 		return false;
 	}
 
-
+//	예약번호를 보고 예약 삭제
 	public boolean deleteReserveByReserveId(int reserveId) {
 		String sql = "delete from reserve where reserveId = ?";
 		try {

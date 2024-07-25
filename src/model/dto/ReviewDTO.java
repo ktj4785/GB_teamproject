@@ -8,19 +8,24 @@ public class ReviewDTO {
 	private String review;
 	private double grade;
 	private Timestamp createtime;
-	private int scheduleId;
+	private int movieId;
 	private String userId;
 	private String movieName;
 	
 
-	public ReviewDTO(int reviewId, String review, double grade, Timestamp createtime, int scheduleId,
+	public ReviewDTO(int reviewId, String review, double grade, Timestamp createtime, int movieId,
 			String userId,String movieName) {
 		this.reviewId = reviewId;
 		this.review = review;
 		this.grade = grade;
 		this.createtime = createtime;
-		this.scheduleId = scheduleId;
+		this.movieId = movieId;
 		this.userId = userId;
+		this.movieName = movieName;
+	}
+	
+	public ReviewDTO(int movieId, String movieName) {
+		this.movieId = movieId;
 		this.movieName = movieName;
 	}
 
@@ -56,12 +61,12 @@ public class ReviewDTO {
 		this.createtime = createtime;
 	}
 
-	public int getScheduleId() {
-		return scheduleId;
+	public int getmovieId() {
+		return movieId;
 	}
 
-	public void setScheduleId(int scheduleId) {
-		this.scheduleId = scheduleId;
+	public void setScheduleId(int movieId) {
+		this.movieId = movieId;
 	}
 
 	public String getUserId() {

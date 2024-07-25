@@ -106,9 +106,9 @@ public class UserInfoView {
 						}
 						System.out.println("예약을 취소하시겠습니까?\n 1.예 2.아니오");
 						int choice2 = sc.nextInt();
-						System.out.println("최소할 예약의 번호를 입력하세요");
-						int select = sc.nextInt();
 						if(choice2==1) {
+							System.out.println("최소할 예약의 번호를 입력하세요");
+							int select = sc.nextInt();
 							ReserveController rcon = new ReserveController();
 							if(rcon.deleteReserve(list.get(select-1),Integer.parseInt(balance))) {
 								System.out.println("예약이 취소되었습니다");
