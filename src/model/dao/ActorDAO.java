@@ -37,7 +37,7 @@ public class ActorDAO {
 			}
 		} catch (SQLException e) {
 		}
-		if(result == null) {
+		if(result.size()==0) {
 			return null;
 		}
 		return result;

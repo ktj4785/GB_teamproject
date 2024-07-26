@@ -9,6 +9,7 @@ import model.dao.ReserveDAO;
 import model.dao.ScheduleDAO;
 import model.dao.SeatDAO;
 import model.dao.TheaterDAO;
+import model.dto.AccountDTO;
 import model.dto.MovieDTO;
 import model.dto.ReserveDTO;
 import model.dto.ScheduleDTO;
@@ -121,6 +122,29 @@ public class ReserveController {
 		}
 		return seatlist;
 	}
-	
+	public boolean Reservepayment(int price) {
+		AccountDAO acdao = new AccountDAO();
+		
+		String userId = (String)Session.getData("loginUser");
+		AccountDTO account = acdao.getAccountByUserid(userId);
+		if(price>account.getBalance()) {
+			return false;
+		}
+		else {
+			acdao.updateBalance(account.getBalance()-price, userId);
+			return true;
+		}
+
+	}
+	public boolean updateReservePayment(boolean payment, int reserveId) {
+		ReserveDAO rdao = new ReserveDAO();
+		return rdao.updatePayment(payment,reserveId);
+		
+	}
+	public void updateLeftSeat(int leftSeat, int scheduleId) {
+		ScheduleDAO sdao = new ScheduleDAO();
+		sdao.updateScheduleLeftSeat(leftSeat,scheduleId);
+		
+	}
 	
 }

@@ -87,38 +87,8 @@ public class UserInfoView {
 							System.out.println("예약된 영화가 없습니다.");
 							break;
 						}
-						ArrayList<ReserveDTO> list = (ArrayList<ReserveDTO>)infodata.get("list");
-						System.out.println("번호	영화		영화시간				극장			인원	가격		좌석		결재여부");
-						int count = 1;
-						for(ReserveDTO reserve : list) {
-//							스케쥴 불러와서 영화시간 시작 시간 적기, 
-//							근데 스케쥴 불러올때 그냥 불러오는게 아니고 영화와 극장의 이름도 제대로 데려와야함
-							ReserveController rcon = new ReserveController();
-							HashMap<String, Object> reserveData = rcon.getReserveDetail(reserve.getScheduleId());
-							System.out.print(count+"\t");
-							System.out.print((String)reserveData.get("movieName")+"\t\t");
-							System.out.print((Timestamp)reserveData.get("scheduleStartTime")+"\t");
-							System.out.print((String)reserveData.get("theaterName")+"\t");
-							System.out.print(reserve.getpNum()+"\t");
-							System.out.print(reserve.getPrice()+"\t");
-							System.out.print(reserve.getSeat()+"\t");
-							System.out.print(reserve.isPayment()+"\n");
-							count++;
-						}
-						System.out.println("예약을 취소하시겠습니까?\n 1.예 2.아니오");
-						int choice2 = sc.nextInt();
-						if(choice2==1) {
-							System.out.println("최소할 예약의 번호를 입력하세요");
-							int select = sc.nextInt();
-							ReserveController rcon = new ReserveController();
-							if(rcon.deleteReserve(list.get(select-1),Integer.parseInt(balance))) {
-								System.out.println("예약이 취소되었습니다");
-							}
-							
-						}
-						else if(choice2==2) {
-							break;
-						}
+						new UserReserveView(infodata);
+						break;
 					case 3:
 						//input이랑 반복문 넣어야할듯
 						System.out.println("계좌번호 : "+account.getAccountId());

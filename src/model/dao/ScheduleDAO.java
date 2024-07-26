@@ -171,7 +171,23 @@ public class ScheduleDAO {
 		} catch (SQLException e) {
 		}
 		return null;
-	}	
+	}
 
+	public boolean updateScheduleLeftSeat(int leftSeat, int scheduleId) {
+		String sql = "UPDATE schedule SET leftseat = ? WHERE scheduleId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, leftSeat);
+			ps.setInt(2, scheduleId);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+	}
+		
 
 }

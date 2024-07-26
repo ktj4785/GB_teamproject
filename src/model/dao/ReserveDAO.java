@@ -139,6 +139,21 @@ public class ReserveDAO {
 
 	}
 
+	public boolean updatePayment(boolean payment, int reserveId) {
+		String sql = "UPDATE reserve SET payment = ? WHERE reserveId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setBoolean(1, payment);
+			ps.setInt(2, reserveId);
+			
+			int result = ps.executeUpdate();
+							
+			return result == 1;
+		} catch (SQLException e) {
+			System.out.println("DB오류가 발생하였습니다 " + e);
+		}
+		return false;
+	}
 
 
 }
