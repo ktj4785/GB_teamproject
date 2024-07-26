@@ -76,7 +76,7 @@ public class UserController {
 		udao.deleteUser(loginUser);
 		
 		//탈퇴되었으므로 로그인 된 정보를 유지하는 세션도 초기화를 진행해야 한다.
-		Session.setData("loginUser", null);
+		
 		if(udao.getUserByUserid(loginUser)==null){
 			return true;
 		}

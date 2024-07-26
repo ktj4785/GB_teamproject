@@ -42,11 +42,12 @@ public class ScheduleView {
 				}
 				break;
 			case 3:
-				for(ScheduleDTO sd : list) {
-					System.out.printf("%s | %s | %s | %s | %s | %s | %s | %s | %d\n",
-							sd.getTheaterName(), sd.getDimension(), sd.getStartTime().toString(), sd.getMovieName(), sd.getStartTime().toString(), sd.getRunningTime(), sd.getGenre(), sd.getLeftSeat());
-				}
+				 for(ScheduleDTO sd : list) {
+		               System.out.printf("%s | %sD | %s | %s | 잔여 %d석 | %s | %s\n",
+		                     sd.getTheaterName(), sd.getDimension(), sd.getMovieName(), sd.getStartTime().toString(), sd.getLeftSeat(), sd.getGenre(), sd.getRunningTime());
+		            }
 				break;
+				
 			default:
 					System.out.println("잘못된 선택입니다.");
 			break;

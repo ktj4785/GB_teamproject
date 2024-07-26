@@ -25,7 +25,7 @@ public class SeatDAO {
                     "FROM schedule Sch " +
                     "JOIN theater T ON Sch.theaterId = T.theaterId " +
                     "JOIN seat S ON T.theaterId = S.theaterId " +
-                    "WHERE Sch.scheduleId = ?";
+                    "WHERE Sch.scheduleId = ? order by seatRow";
 			
 			try {
 				ps = conn.prepareStatement(sql);

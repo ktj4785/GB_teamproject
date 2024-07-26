@@ -40,8 +40,8 @@ public class ScheduleDAO {
 			break;
 		case 3:
 			order_col = "t.theaterName";
-			sql = "select m.movieName, t.dimension, m.movieName, s.startTime, m.runningTime, m.genre, s.leftSeat from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
-			break;
+	        sql = "select t.theaterName, t.dimension, m.movieName, s.startTime, s.leftSeat, m.genre, m.runningTime from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
+	        break;
 		}
 		
 		if(asc == 1) {

@@ -54,6 +54,7 @@ public class UserInfoView {
 					if(user.getUserPw().equals(userpw)) {
 						if(ucon.leaveId(loginUser)) {
 							System.out.println(loginUser+"님 회원 탈퇴 처리 완료되었습니다.");
+							Session.setData("loginUser", null);
 							return;
 						}
 

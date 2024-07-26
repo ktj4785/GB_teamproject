@@ -10,12 +10,16 @@ public class MainView {
 		Scanner sc = new Scanner(System.in);
         int choice;
         while(true) {
+        	if(Session.getData("loginUser")==null) {
+        		break;
+        	}
             System.out.println("==========메뉴========");
             System.out.println("1.영화목록\n2.영화검색\n3.영화관검색\n4.상영시간표 확인\n5.영화예약\n6.회원정보\n7.리뷰관리\n8.로그아웃");
             try {
                 choice = sc.nextInt();
                 if(choice == 8) {
                      System.out.println(Session.getData("loginUser")+"님 다음에 또 오세요~");
+                     Session.setData("loginUser", null);
                      break;
                 }
                 switch(choice) {

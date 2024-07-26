@@ -27,7 +27,7 @@ public class TheaterSearchView {
 		} else {
 			for(TheaterDTO th : theaterList) {
 				
-				System.out.printf("%d. %s | %s | %d석 | %sD",
+				System.out.printf("%d. %s | %s | %d석 | %sD\n",
 						th.getTheaterId(),
 						th.getTheaterAddr(),
 						th.getTheaterName(),
