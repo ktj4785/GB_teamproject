@@ -42,28 +42,32 @@ public class MovieReserveView {
 //				String seat = "A1";
 
 				ScheduleDTO reseveSchedule = rcon.getScheduleByScheduleId(scheduleId);
-				TheaterDTO scheduleTheater = rcon.getTheaterByScheduleId(reseveSchedule.getTheaterId());
+				
 				ArrayList<SeatDTO> seatList = rcon.getSeatList(scheduleId);
 				ArrayList<String> reserveSeat = rcon.getReserveSeat(scheduleId);
 				
-				if(reseveSchedule.getLeftSeat() < scheduleTheater.getSeatCnt()) {
+				if(reseveSchedule.getLeftSeat()>0) {
 					int rowCnt = seatList.size();
+					System.out.println(rowCnt);
 					
 					System.out.print("\t");
-					for(int i=0; i<Integer.parseInt(seatList.get(i).getSeatLine()); i++){
+					for(int i=0; i<Integer.parseInt(seatList.get(0).getSeatLine()); i++){
 						System.out.print(i);
 					}
-					for(int i= 0 ;i< rowCnt-1; i++ ) {
+					System.out.print("\n");
+					for(int i= 0 ;i< rowCnt; i++ ) {
 						
-						System.out.println(seatList.get(i).getSeatRow()+"열\t");
+						System.out.print(seatList.get(i).getSeatRow()+"열\t");
 						
 						for(int j= 0 ;j < Integer.parseInt(seatList.get(i).getSeatLine()); j++) {
 							
-							if(reserveSeat.contains(seatList.get(i).getSeatRow()+j)) {
-								
-								System.out.print("■");
-								
-								continue;
+							if(reserveSeat!=null) {
+								if(reserveSeat.contains(seatList.get(i).getSeatRow()+j)) {
+									
+									System.out.print("■");
+									
+									continue;
+							}
 							}
 							System.out.print("□");
 						}
@@ -79,13 +83,15 @@ public class MovieReserveView {
 					System.out.print("예약하실 좌석의 열을 입력해 주세요: ");
 					int seatRow = sc.nextInt();
 					seat += seatLine+seatRow;
+					System.out.println(seatLine.charAt(0)-65);
+					price += (seatList.get(seatLine.charAt(0)-65)).getSeatPrice();
 					if(i==pNum-1) {
 						continue;
 					}
 					seat +=":";
-					price += (seatList.get(seatLine.charAt(0)-65)).getSeatPrice();
 				}
-
+				System.out.println(seat);
+				System.out.println(price);
 //				비용 지불하는 메소드 만들어서 입력할것!!!
 				boolean payment = false;
 				

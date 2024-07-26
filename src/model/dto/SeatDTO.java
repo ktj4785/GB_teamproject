@@ -6,16 +6,16 @@ public class SeatDTO {
 	private int seatPrice;
 	private	String seatLine;
 	private String	seatRow;
-	private int	theaterID;
+	private int	theaterId;
 	
 	
-	public SeatDTO(int seatId, String seatType, int seatPrice, String seatLine, String seatRow, int theaterID) {
+	public SeatDTO(int seatId, String seatType, int seatPrice, String seatLine, String seatRow, int theaterId) {
 		this.seatId = seatId;
 		this.seatType = seatType;
 		this.seatPrice = seatPrice;
 		this.seatLine = seatLine;
 		this.seatRow = seatRow;
-		this.theaterID = theaterID;
+		this.theaterId = theaterId;
 	}
 
 
@@ -69,13 +69,13 @@ public class SeatDTO {
 	}
 
 
-	public int getTheaterID() {
-		return theaterID;
+	public int getTheaterId() {
+		return theaterId;
 	}
 
 
-	public void setTheaterID(int theaterID) {
-		this.theaterID = theaterID;
+	public void setTheaterId(int theaterId) {
+		this.theaterId = theaterId;
 	}
 	
 }

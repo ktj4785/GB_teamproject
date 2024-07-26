@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import model.DBConnection;
 import model.dto.MovieDTO;
 import model.dto.UserDTO;
 import java.util.ArrayList;
+
+
+
 
 public class MovieDAO {
 	Connection conn;
@@ -19,6 +21,7 @@ public class MovieDAO {
 	public MovieDAO() {
 		conn = DBConnection.getConnection();
 	}
+
 	//영화 리스트를 획득함
 	//쿼리문 수정 필요
 	public ArrayList<MovieDTO> getlist(int choice) {
@@ -33,8 +36,8 @@ public class MovieDAO {
 				+ "mt.runningTime,\r\n"
 				+ "mt.genre,\r\n"
 				+ "format(avg(r.grade),1)as score\r\n"
-				+ "from movietest mt\r\n"
-				+ "	join reviewtest r using(movieId)\r\n"
+				+ "from movie mt\r\n"
+				+ "	join review r using(movieId)\r\n"
 				+ "group by mt.movieId,\r\n"
 				+ "mt.movieName,\r\n"
 				+ "mt.director,\r\n"
@@ -74,8 +77,8 @@ public class MovieDAO {
 				+ "mt.runningTime,\r\n"
 				+ "mt.genre,\r\n"
 				+ "format(avg(r.grade),1)as score\r\n"
-				+ "from movietest mt\r\n"
-				+ "	join reviewtest r using(movieId)\r\n"
+				+ "from movie mt\r\n"
+				+ "	join review r using(movieId)\r\n"
 				+ "where mt.moviename like ? \r\n"
 				+ "group by mt.movieId,\r\n"
 				+ "mt.movieName,\r\n"
@@ -120,10 +123,10 @@ public class MovieDAO {
 				+ "mt.runningTime,\r\n"
 				+ "mt.genre,\r\n"
 				+ "a.actorName\r\n"
-				+ "from movietest mt\r\n"
-				+ "	join actortest a using(movieId)\r\n"
+				+ "from movie mt\r\n"
+				+ "	join actor a using(movieId)\r\n"
 				+ "where actorName like ?) ma\r\n"
-				+ "join reviewtest r using(movieId)\r\n"
+				+ "join review r using(movieId)\r\n"
 				+ "group by ma.movieId,\r\n"
 				+ "ma.movieName,\r\n"
 				+ "ma.director,\r\n"
@@ -162,8 +165,8 @@ public class MovieDAO {
 				+ "mt.runningTime,\r\n"
 				+ "mt.genre,\r\n"
 				+ "format(avg(r.grade),1)as score\r\n"
-				+ "from movietest mt\r\n"
-				+ "	join reviewtest r using(movieId)\r\n"
+				+ "from movie mt\r\n"
+				+ "	join review r using(movieId)\r\n"
 				+ "where mt.director like ? \r\n"
 				+ "group by mt.movieId,\r\n"
 				+ "mt.movieName,\r\n"

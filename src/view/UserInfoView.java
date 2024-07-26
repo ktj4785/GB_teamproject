@@ -28,6 +28,7 @@ public class UserInfoView {
 		System.out.printf("======%8s님의 회원정보======\n",loginUser);
 		System.out.println("아이디 : "+user.getUserId());
 		System.out.println("비밀번호 : "+user.getUserPw());
+		System.out.println("이름 : "+user.getUserName());
 		System.out.println("나이 : "+user.getUserAge());
 		System.out.println("주민등록 번호 : "+user.getSocialNum());
 		System.out.println("핸드폰 번호 : "+user.getPhone());

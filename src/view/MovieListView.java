@@ -39,10 +39,10 @@ public class MovieListView {
 			sc.nextLine();
 			int choice2 = sc.nextInt();
 			System.out.println("무비 아이디:"+(list.get(choice2-1)).getMovieId());
+			new MovieReserveView((list.get(choice2-1)).getMovieId());
 			//나중에 해당 아이디를 넘겨주기
 		}
 		else if(choice1 == 1){
-			
 		}
 		
 	}

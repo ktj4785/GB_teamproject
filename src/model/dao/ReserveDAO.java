@@ -87,16 +87,16 @@ public class ReserveDAO {
 		return false;
 	}
 	public boolean insetReserveInfo(int pNum, int price, boolean payment, int scheduleId, String seat) {
-		String sql = "insert into reserve (pNum, price, payment, userId, scheduleId, seat) values(?, ?, ?, ?, ?, ?)";
+		String sql = "insert into reserve (pNum, price, payment,seat, userId, scheduleId) values(?, ?, ?, ?, ?, ?)";
 
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, pNum);
 			ps.setInt(2, price);
 			ps.setBoolean(3, payment);
-			ps.setString(4, (String) Session.getData("loginUser"));
-			ps.setInt(4, scheduleId);
-			ps.setString(5, seat);
+			ps.setString(4, seat);
+			ps.setString(5, (String) Session.getData("loginUser"));
+			ps.setInt(6, scheduleId);
 
 			int result = ps.executeUpdate();
 

@@ -21,10 +21,10 @@ public class SeatDAO {
 			ArrayList<SeatDTO> seatlist = new ArrayList<>();
 			
 					
-			String sql = "SELECT S.seatId, S.seatType, S.seatPrice, S.seatLine, S.seatRow " +
-                    "FROM Schedule Sch " +
-                    "JOIN Theater T ON Sch.theaterId = T.theaterId " +
-                    "JOIN Seats S ON T.theaterId = S.theaterID " +
+			String sql = "SELECT S.* " +
+                    "FROM schedule Sch " +
+                    "JOIN theater T ON Sch.theaterId = T.theaterId " +
+                    "JOIN seat S ON T.theaterId = S.theaterId " +
                     "WHERE Sch.scheduleId = ?";
 			
 			try {
@@ -40,12 +40,13 @@ public class SeatDAO {
 							rs.getInt("seatPrice"),
 							rs.getString("seatLine"),
 							rs.getString("seatRow"),
-							rs.getInt("theaterID")
+							rs.getInt("theaterId")
 					);
 					seatlist.add(seat);
 				}
 			} catch (SQLException e) {
 				System.err.println(e);
+				System.out.println("데이터베이스 오류");
 			}
 			if(seatlist.size() == 0) {
 				return null;

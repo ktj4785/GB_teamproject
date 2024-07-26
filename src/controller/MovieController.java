@@ -11,6 +11,7 @@ import model.dao.TheaterDAO;
 import model.dto.ScheduleDTO;
 import model.dto.TheaterDTO;
 
+
 public class MovieController {
 
 	// 영화 목록 불러오기
@@ -32,6 +33,7 @@ public class MovieController {
 		MovieDAO mdao = new MovieDAO();
 		return mdao.getDirectorName(ans);
 	}
+
 
 
 	//영화관 주소 검색 메서드

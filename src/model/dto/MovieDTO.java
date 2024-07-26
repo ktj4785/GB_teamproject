@@ -10,6 +10,7 @@ public class MovieDTO {
 	
 	public MovieDTO() {}
 
+
 	public MovieDTO(int movieId, String movieName, String director, String runningTime, String genre, double score) {
 		this.movieId = movieId;
 		this.movieName = movieName;
@@ -66,6 +67,5 @@ public class MovieDTO {
 	public void setScore(double score) {
 		this.score = score;
 	}
-
 }
 
