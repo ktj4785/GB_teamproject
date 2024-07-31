@@ -7,33 +7,52 @@ import java.util.Map;
 import java.util.Scanner;
 
 import controller.ReserveController;
+import model.dto.MovieDTO;
 import model.dto.ScheduleDTO;
 import model.dto.SeatDTO;
 import model.dto.TheaterDTO;
 
 public class MovieReserveView {
-	public MovieReserveView(int movieId) {
+	public MovieReserveView(Integer movieId,Integer theaterId) {
 		Scanner sc = new Scanner(System.in);
 		ReserveController rcon = new ReserveController();
-		
-		HashMap<String, Object> list = rcon.getmovieDetail(movieId);
-		
-		ArrayList<ScheduleDTO> schedule = (ArrayList<ScheduleDTO>)list.get("schedule");
-		ArrayList<TheaterDTO> theater = (ArrayList<TheaterDTO>) list.get("theater");
+		HashMap<String, Object> list = new HashMap<>();
+		ArrayList<ScheduleDTO> schedule = new ArrayList<>();
+		ArrayList<TheaterDTO> theater = new ArrayList<>();
+		ArrayList<MovieDTO> movie = new ArrayList<>();
+		if(theaterId==null) {
+			list = rcon.getmovieDetail(movieId);			
+			schedule = (ArrayList<ScheduleDTO>)list.get("schedule");
+			theater = (ArrayList<TheaterDTO>) list.get("theater");
+		}
+		else if(movieId==null) {
+			list = rcon.getTheaterDetail(theaterId);	
+			schedule = (ArrayList<ScheduleDTO>)list.get("schedule");
+			movie = (ArrayList<MovieDTO>)list.get("movie");
+			System.out.println(movie.size());
+			System.out.println(schedule.size());
+		}
 		
 		if(schedule == null) {
 			System.out.println("상영예정 일정이 없습니다.");
 		}
 		else {
-			int count = 0;
+			int count = 1;
+			
 			System.out.println("=======상영예정 일정=======");
 			for(int i = 0; i < schedule.size(); i++) {
 //				if(schedule.get(i).getStartTime()<nowtime) {
 //					continue;
-//				}
-				System.out.printf("%d번 | 시작시간 : %s | 종료시간 : %s | 남은 좌석 : %d석 | %s | 주소 : %s",
-						count, schedule.get(i).getStartTime(), schedule.get(i).getEndTime(),
-						schedule.get(i).getLeftSeat(), theater.get(i).getTheaterName(), theater.get(i).getTheaterAddr());
+				if(theaterId==null) {
+					System.out.printf("%d번 | 시작시간 : %s | 종료시간 : %s | 남은 좌석 : %d석 | %s | 주소 : %s\n",
+							count, schedule.get(i).getStartTime(), schedule.get(i).getEndTime(),
+							schedule.get(i).getLeftSeat(), theater.get(i).getTheaterName(), theater.get(i).getTheaterAddr());
+				}
+				else if(movieId==null) {
+					System.out.printf("%d번 | 제목 : %s | 장르 : %s | 시작시간 : %s | 종료시간 : %s | 남은 좌석 : %d석 \n",
+							count,movie.get(i).getMovieName(), movie.get(i).getGenre(), schedule.get(i).getStartTime(), schedule.get(i).getEndTime(),
+							schedule.get(i).getLeftSeat());
+				}
 				count++;
 			}
 			System.out.println("=====================");

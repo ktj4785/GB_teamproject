@@ -95,12 +95,15 @@ public class TheaterDAO {
 							rs.getString(5)
 							);
 					list.add(theater);
-					return list;
+					
 				}
 			} catch (SQLException e) {
 			}
 		}
-		return null;
+		if(list.size()==0) {
+			return null;
+		}
+		return list;
 	}
 
 //	public TheaterDTO getTheaterByTheaterId(int theaterId) {

@@ -48,7 +48,23 @@ public class ScheduleDTO {
 		this.theaterName = theaterName;
 		this.dimension = dimension;
 	}
-
+//    rs.getString("movieName"),
+//    rs.getString("director"),
+//    rs.getTimestamp("startTime"),
+//    rs.getString("runningTime"),
+//    rs.getString("genre"),
+//    rs.getDouble("leftSeat")
+	public ScheduleDTO(String movieName,String director,Timestamp startTime,String runningTime,String genre, int leftSeat) 
+	{
+		this.startTime = startTime;
+		this.leftSeat = leftSeat;
+		this.movieName = movieName;
+		this.director = director;
+		this.runningTime = runningTime;
+		this.genre = genre;
+	}
+    
+    
 	public ScheduleDTO(String theaterName, String dimension, String movieName, Timestamp startTime, int leftSeat, String genre, String runningTime) {
 		this.startTime = startTime;
 		this.leftSeat = leftSeat;
@@ -58,6 +74,9 @@ public class ScheduleDTO {
 		this.theaterName = theaterName;
 		this.dimension = dimension;
 	}
+
+	
+
 
 	public ScheduleDTO(int scheduleId, String movieName, String director, String runningTime, String genre, double avgScore, String theaterName, String dimension, Timestamp startTime, int leftSeat) {
 		this.scheduleId = scheduleId;

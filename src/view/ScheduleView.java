@@ -31,20 +31,20 @@ public class ScheduleView {
 			switch(choice) {
 			case 1:
 				for(ScheduleDTO sd : list) {
-					System.out.printf("%s | %s감독 | %s | %s | %.1f\n", 
+					System.out.printf("%-20s\t| %-10s\t| %-5s| %-15s\t| %.1f\n", 
 							sd.getMovieName(), sd.getDirector(), sd.getRunningTime(), sd.getGenre(), sd.getAvgScore());
 				}
 				break;
 			case 2:
 				for(ScheduleDTO sd : list) {
-					System.out.printf("%s | %s | %s | %s | %d\n",
-							sd.getMovieName(), sd.getTheaterName(), sd.getDimension(), sd.getStartTime().toString(), sd.getLeftSeat());
+					System.out.printf("%-20s\t| %s | %s | %s | 잔여%5d석\n",
+							sd.getMovieName(), sd.getTheaterName(), sd.getDimension()+"D", sd.getStartTime().toString(), sd.getLeftSeat());
 				}
 				break;
 			case 3:
 				 for(ScheduleDTO sd : list) {
-		               System.out.printf("%s | %sD | %s | %s | 잔여 %d석 | %s | %s\n",
-		                     sd.getTheaterName(), sd.getDimension(), sd.getMovieName(), sd.getStartTime().toString(), sd.getLeftSeat(), sd.getGenre(), sd.getRunningTime());
+		               System.out.printf("%s | %s | %-20s\t| %s | 잔여 %5d석 | %-18s\t| %s\n",
+		                     sd.getTheaterName(), sd.getDimension()+"D", sd.getMovieName(), sd.getStartTime().toString(), sd.getLeftSeat(), sd.getGenre(), sd.getRunningTime());
 		            }
 				break;
 				

@@ -88,7 +88,7 @@ public class UserInfoView {
 							System.out.println("예약된 영화가 없습니다.");
 							break;
 						}
-						new UserReserveView(infodata);
+						new UserReserveView();
 						break;
 					case 3:
 						//input이랑 반복문 넣어야할듯

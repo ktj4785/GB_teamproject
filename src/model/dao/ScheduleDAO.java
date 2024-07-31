@@ -31,9 +31,10 @@ public class ScheduleDAO {
 		
 		switch(choice) {
 		case 1:
-			order_col = "movieName";
-			sql = "select m.movieName, m.director, m.runningTime, m.genre, m.avgScore from movie m order by " + order_col;
+			order_col = "m.movieName";
+			sql = "select m.movieName, m.director,s.startTime, m.runningTime, m.genre, s.leftSeat from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
 			break;
+			
 		case 2:
 			order_col = "s.startTime";
 			sql = "select m.movieName, t.theaterName, t.dimension, s.startTime, s.leftSeat from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
@@ -61,9 +62,10 @@ public class ScheduleDAO {
                     schedule = new ScheduleDTO(
                             rs.getString("movieName"),
                             rs.getString("director"),
+                            rs.getTimestamp("startTime"),
                             rs.getString("runningTime"),
                             rs.getString("genre"),
-                            rs.getDouble("avgScore")
+                            rs.getInt("leftSeat")
                     );
                 } else if (choice == 2) {
                     schedule = new ScheduleDTO(
@@ -187,6 +189,37 @@ public class ScheduleDAO {
 			System.out.println("DB오류가 발생하였습니다 " + e);
 		}
 		return false;
+	}
+
+	public ArrayList<ScheduleDTO> getScheduleByTheaterId(int theaterId) {
+		ArrayList<ScheduleDTO> list = new ArrayList<>();
+
+		String sql = "select * from schedule where theaterId = "+ theaterId;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				ScheduleDTO schedule = new ScheduleDTO(
+						rs.getInt("scheduleId"),
+						rs.getTimestamp("startTime"),
+						rs.getTimestamp("endTime"),
+						rs.getInt("leftSeat"),
+						rs.getInt("theaterId"),
+						rs.getInt("movieId")
+				);
+				list.add(schedule);
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		if(list.size() == 0) {
+			return null;
+		}
+		else {
+			return list;
+		}
 	}
 		
 

@@ -21,7 +21,7 @@ public class ReserveView {
 		}
 		else {
 			for(MovieDTO movie : mList) {
-				System.out.printf("%d번 제목 : %s | 감독 : %s | 상영시간 : %s | 장르 : %s | 평점 : %d점\n",
+				System.out.printf("%d번 제목 : %s | 감독 : %s | 상영시간 : %s | 장르 : %s | 평점 : %f점\n",
 						movie.getMovieId(), movie.getMovieName(), movie.getDirector(),
 						movie.getRunningTime(), movie.getGenre(), movie.getScore());
 			}
@@ -29,7 +29,7 @@ public class ReserveView {
 			System.out.println("예약하실 영화 번호 입력(나가시려면 0번을 입력하세요) : ");
 			int movieId = sc.nextInt();
 			if(movieId != 0) {
-				new MovieReserveView(movieId);
+				new MovieReserveView(movieId,null);
 			}
 		}
 	}

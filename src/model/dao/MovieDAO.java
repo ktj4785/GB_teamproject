@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.DBConnection;
 import model.dto.MovieDTO;
+import model.dto.TheaterDTO;
 import model.dto.UserDTO;
 import java.util.ArrayList;
 
@@ -225,10 +226,9 @@ public class MovieDAO {
 	public ArrayList<MovieDTO> getMovieByKeyword(String keyword) {
 		ArrayList<MovieDTO> result = new ArrayList<>();
 
-		String sql = "select * from moive where movieName like('%"+keyword+"%')"
-				+ "or director like('%"+keyword+"%') "
-				+ "or genre like('%"+keyword+"%')";
-
+		String sql = "SELECT * FROM movie WHERE movieName LIKE '%" + keyword + "%' " +
+	             "OR director LIKE '%" + keyword + "%' " +
+	             "OR genre LIKE '%" + keyword + "%'";
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -245,11 +245,46 @@ public class MovieDAO {
 				result.add(movie);
 			}
 		} catch (SQLException e) {
+			System.out.println("데이터베이스 오류");
+			
 		}
 		if(result.size() == 0) {
 			return null;
 		}
 		return result;
+	}
+
+	public ArrayList<MovieDTO> getMovieByScheduleTheaterId(ArrayList<Integer> idList) {
+		ArrayList<MovieDTO> list = new ArrayList<>();
+
+		for (int i = 0; i < idList.size(); i++) {
+			System.out.println((int)idList.get(i));
+			String sql = "select * from movie where movieId = "+ (int)idList.get(i);
+
+			try {
+				ps = conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+
+				if(rs.next()) {
+					MovieDTO movie = new MovieDTO(
+							rs.getInt("movieId"),
+							rs.getString("movieName"),
+							rs.getString("director"),
+							rs.getString("runningTime"),
+							rs.getString("genre"),
+							rs.getDouble("score")		
+					);
+					list.add(movie);
+					System.out.println(list.size()+"현재"); 
+					
+				}
+			} catch (SQLException e) {
+			}
+		}
+		if(list.size()==0) {
+			return null;
+		}
+		return list;
 	}
 
 }

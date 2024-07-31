@@ -20,7 +20,7 @@ public class TheaterSearchView {
 		
 		//처리
 		ArrayList<TheaterDTO> theaterList = controller.search(theaterName);
-		
+		int count = 1;
 		System.out.println("\"" + theaterName + "\" 로 검색된 결과");
 		if(theaterName == null) {
 			System.out.println("검색된 결과가 없습니다.");
@@ -28,14 +28,23 @@ public class TheaterSearchView {
 			for(TheaterDTO th : theaterList) {
 				
 				System.out.printf("%d. %s | %s | %d석 | %sD\n",
-						th.getTheaterId(),
+						count,
 						th.getTheaterAddr(),
 						th.getTheaterName(),
 						th.getSeatCnt(),
 						th.getDimension()
 				);
+				count++;
 			}
 		}
-		System.out.println();		
+		System.out.println("예약할 영화관을 골라주세요 (0번을 누르시면 취소입니다)");
+		int choice = sc.nextInt();
+		if(choice==0) {
+			return;
+		}
+		else{
+			new MovieReserveView(null,theaterList.get(choice-1).getTheaterId());	
+		}
+		
 	}
 }

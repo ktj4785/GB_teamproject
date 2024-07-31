@@ -64,14 +64,7 @@ public class ReserveController {
 		HashMap<String, Object> scheduleList = new HashMap<>();
 
 		ArrayList<ScheduleDTO> list = sdao.getScheduleByMovieId(movieId); 
-//		ScheduleDTO schedule = new ScheduleDTO(
-//				list.get(0).getScheduleId(),
-//				list.get(0).getStartTime(),
-//				list.get(0).getEndTime(),
-//				list.get(0).getLeftSeat(),
-//				list.get(0).getTheaterId(),
-//				list.get(0).getMovieId()
-//				);		
+
 		ArrayList<Integer> idList = new ArrayList<>();
 		for(ScheduleDTO schedule : list) {
 			idList.add(schedule.getTheaterId());
@@ -146,5 +139,27 @@ public class ReserveController {
 		sdao.updateScheduleLeftSeat(leftSeat,scheduleId);
 		
 	}
+	
+	public HashMap<String, Object> getTheaterDetail(int theaterId) {
+		ScheduleDAO sdao = new ScheduleDAO();
+		MovieDAO mdao = new MovieDAO();
+
+		HashMap<String, Object> scheduleList = new HashMap<>();
+
+		ArrayList<ScheduleDTO> list = sdao.getScheduleByTheaterId(theaterId); 
+
+		ArrayList<Integer> idList = new ArrayList<>();
+		for(ScheduleDTO schedule : list) {
+			idList.add(schedule.getMovieId());
+		}
+		System.out.println(idList.size());
+		ArrayList<MovieDTO> movie = mdao.getMovieByScheduleTheaterId(idList);
+
+		scheduleList.put("schedule", list);
+		scheduleList.put("movie", movie);
+
+		return scheduleList;
+	}
+	
 	
 }
