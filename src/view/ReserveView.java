@@ -14,7 +14,7 @@ public class ReserveView {
 
 		ReserveController controller = new ReserveController();
 		ArrayList<MovieDTO> mList = controller.searchMovieList(keyword);
-
+		int count = 1;
 		System.out.println("\""+keyword+"\" 로 검색된 결과");
 		if(mList == null) {
 			System.out.println("검색된 결과가 없습니다.");
@@ -22,14 +22,15 @@ public class ReserveView {
 		else {
 			for(MovieDTO movie : mList) {
 				System.out.printf("%d번 제목 : %s | 감독 : %s | 상영시간 : %s | 장르 : %s | 평점 : %f점\n",
-						movie.getMovieId(), movie.getMovieName(), movie.getDirector(),
+						count, movie.getMovieName(), movie.getDirector(),
 						movie.getRunningTime(), movie.getGenre(), movie.getScore());
+				count++;
 			}
 			System.out.println("===============================");
 			System.out.println("예약하실 영화 번호 입력(나가시려면 0번을 입력하세요) : ");
 			int movieId = sc.nextInt();
 			if(movieId != 0) {
-				new MovieReserveView(movieId,null);
+				new MovieReserveView(mList.get(movieId-1).getMovieId(),null);
 			}
 		}
 	}

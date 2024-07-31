@@ -31,8 +31,17 @@ public class ScheduleDAO {
 		
 		switch(choice) {
 		case 1:
-			order_col = "m.movieName";
-			sql = "select m.movieName, m.director,s.startTime, m.runningTime, m.genre, s.leftSeat from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
+			order_col = "movieName";
+	        sql = "SELECT "
+	                + "mt.movieName, "
+	                + "mt.director, "
+	                + "mt.runningTime, "
+	                + "mt.genre, "
+	                + "FORMAT(AVG(r.grade), 1) AS avgScore "
+	                + "FROM movie mt "
+	                + "JOIN review r USING(movieId) "
+	                + "GROUP BY mt.movieId, mt.movieName, mt.director, mt.runningTime, mt.genre "
+	                + "ORDER BY " + order_col;
 			break;
 			
 		case 2:
@@ -62,10 +71,9 @@ public class ScheduleDAO {
                     schedule = new ScheduleDTO(
                             rs.getString("movieName"),
                             rs.getString("director"),
-                            rs.getTimestamp("startTime"),
                             rs.getString("runningTime"),
                             rs.getString("genre"),
-                            rs.getInt("leftSeat")
+                            rs.getDouble("avgScore")
                     );
                 } else if (choice == 2) {
                     schedule = new ScheduleDTO(
@@ -89,7 +97,9 @@ public class ScheduleDAO {
                 list.add(schedule);
 			}
 		} catch (SQLException e) {
+			System.out.println("DB오류");
 		}
+		
 		
 		return list.isEmpty() ? null : list;
 	}

@@ -19,6 +19,14 @@ public class MovieDTO {
 		this.genre = genre;
 		this.score = score;
 	}
+	public MovieDTO(int movieId, String movieName, String director, String runningTime, String genre) {
+		this.movieId = movieId;
+		this.movieName = movieName;
+		this.director = director;
+		this.runningTime = runningTime;
+		this.genre = genre;
+
+	}
 
 	public int getMovieId() {
 		return movieId;

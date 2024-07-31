@@ -211,8 +211,7 @@ public class MovieDAO {
 						rs.getString("movieName"),
 						rs.getString("director"),
 						rs.getString("runningTime"),
-						rs.getString("genre"),
-						rs.getDouble("score")
+						rs.getString("genre")
 				);
 				//리턴
 				return movie;
@@ -225,10 +224,21 @@ public class MovieDAO {
 	}
 	public ArrayList<MovieDTO> getMovieByKeyword(String keyword) {
 		ArrayList<MovieDTO> result = new ArrayList<>();
+		
 
-		String sql = "SELECT * FROM movie WHERE movieName LIKE '%" + keyword + "%' " +
-	             "OR director LIKE '%" + keyword + "%' " +
-	             "OR genre LIKE '%" + keyword + "%'";
+		String sql = "SELECT "
+		        + "mt.movieId, "
+		        + "mt.movieName, "
+		        + "mt.director, "
+		        + "mt.runningTime, "
+		        + "mt.genre, "
+		        + "FORMAT(AVG(r.grade), 1) AS avgScore "
+		        + "FROM movie mt "
+		        + "JOIN review r USING(movieId) "
+		        + "WHERE mt.movieName LIKE '%" + keyword + "%' "
+		        + "OR mt.director LIKE '%" + keyword + "%' "
+		        + "OR mt.genre LIKE '%" + keyword + "%' "
+		        + "GROUP BY mt.movieId, mt.movieName, mt.director, mt.runningTime, mt.genre";
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -240,7 +250,7 @@ public class MovieDAO {
 						rs.getString("director"),
 						rs.getString("runningTime"),
 						rs.getString("genre"),
-						rs.getDouble("score")		
+						rs.getDouble("avgScore")
 				);
 				result.add(movie);
 			}
@@ -271,8 +281,7 @@ public class MovieDAO {
 							rs.getString("movieName"),
 							rs.getString("director"),
 							rs.getString("runningTime"),
-							rs.getString("genre"),
-							rs.getDouble("score")		
+							rs.getString("genre")	
 					);
 					list.add(movie);
 					System.out.println(list.size()+"현재"); 

@@ -48,12 +48,7 @@ public class ScheduleDTO {
 		this.theaterName = theaterName;
 		this.dimension = dimension;
 	}
-//    rs.getString("movieName"),
-//    rs.getString("director"),
-//    rs.getTimestamp("startTime"),
-//    rs.getString("runningTime"),
-//    rs.getString("genre"),
-//    rs.getDouble("leftSeat")
+
 	public ScheduleDTO(String movieName,String director,Timestamp startTime,String runningTime,String genre, int leftSeat) 
 	{
 		this.startTime = startTime;

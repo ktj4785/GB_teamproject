@@ -123,13 +123,13 @@ public class ReviewDAO {
 		return null;
 	}
 	//리뷰 생성
-	public boolean insertReview(String userId, int movieId, int grade, String reviewText, Timestamp nowtime) {
+	public boolean insertReview(String userId, int movieId, double grade, String reviewText, Timestamp nowtime) {
 		String sql = "insert into review(review,grade,createtime,movieId,userId) values(?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			
 			ps.setString(1, reviewText);
-			ps.setInt(2, grade);
+			ps.setDouble(2, grade);
 			ps.setTimestamp(3, nowtime);
 			ps.setInt(4, movieId);
 			ps.setString(5, userId);

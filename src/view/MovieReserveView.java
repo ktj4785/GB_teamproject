@@ -20,13 +20,14 @@ public class MovieReserveView {
 		ArrayList<ScheduleDTO> schedule = new ArrayList<>();
 		ArrayList<TheaterDTO> theater = new ArrayList<>();
 		ArrayList<MovieDTO> movie = new ArrayList<>();
+		
 		if(theaterId==null) {
 			list = rcon.getmovieDetail(movieId);			
 			schedule = (ArrayList<ScheduleDTO>)list.get("schedule");
 			theater = (ArrayList<TheaterDTO>) list.get("theater");
 		}
 		else if(movieId==null) {
-			list = rcon.getTheaterDetail(theaterId);	
+			list = rcon.getTheaterDetail(theaterId);
 			schedule = (ArrayList<ScheduleDTO>)list.get("schedule");
 			movie = (ArrayList<MovieDTO>)list.get("movie");
 			System.out.println(movie.size());
@@ -113,16 +114,18 @@ public class MovieReserveView {
 					String seatLine = sc.next().toUpperCase();
 					System.out.print("예약하실 좌석의 열을 입력해 주세요: ");
 					int seatRow = sc.nextInt();
-					if(reserveSeat.contains(seatLine+seatRow)) {
-						System.out.println("이미 예약된 좌석입니다");
-						i--;
+					if(reserveSeat!=null) {
+						if(reserveSeat.contains(seatLine+(seatRow-1))) {
+							System.out.println("이미 예약된 좌석입니다");
+							i--;
 //						예약된 좌석인지 확인하고 예약된 좌석이라면 반복 횟수가 소모되었으므로 i--을 통해
 //						그 다음부터 정상적으로 하도록 진행
-						continue;
+							continue;
+						}
 					}
 					
 					
-					seat += seatLine+seatRow;
+					seat += seatLine+(seatRow-1);
 //					좌석 정보를 이어붙임
 					price += (seatList.get(seatLine.charAt(0)-65)).getSeatPrice();
 //					좌석 가격을 계속 더함

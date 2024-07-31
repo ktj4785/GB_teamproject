@@ -36,7 +36,7 @@ public class ReviewController {
 		
 	}
 	//리뷰 작성
-	public boolean addReview(int reserveId, int grade, String reviewText) {
+	public boolean addReview(int reserveId, double grade, String reviewText) {
 		String userId = (String)Session.getData("loginUser");
 		ReviewDAO rvdao = new ReviewDAO();
 		Timestamp nowtime = new Timestamp(System.currentTimeMillis());
