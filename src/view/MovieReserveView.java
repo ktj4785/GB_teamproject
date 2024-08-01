@@ -111,8 +111,19 @@ public class MovieReserveView {
             for (int i = 0; i < pNum; i++) {
                 System.out.print("예약하실 좌석의 행을 입력해 주세요: ");
                 String seatLine = sc.next().toUpperCase();
+                if(seatLine.charAt(0)-65>=seatList.size()|| seatLine.length()>1) {
+                	System.out.println("없는 열이거나 잘못된 입력입니다.");
+                    i--;
+                    continue;
+                }
                 System.out.print("예약하실 좌석의 열을 입력해 주세요: ");
                 int seatRow = sc.nextInt();
+                int row=Integer.parseInt(seatList.get(seatLine.charAt(0) - 65).getSeatLine())  ;
+                if(seatRow>row) {
+                	System.out.println("없는 행입니다.");
+                    i--;
+                    continue;
+                }
                 if (reserveSeat != null && reserveSeat.contains(seatLine + (seatRow - 1))) {
                     System.out.println("이미 예약된 좌석입니다");
                     i--;
@@ -134,8 +145,9 @@ public class MovieReserveView {
                     payment = rcon.Reservepayment(price);
                     if (!payment) {
                         System.out.println("잔액이 부족합니다. 충전을 해주세요");
+                        return;
                     }
-                    break;
+                break;
                 }
                 if (choice == 2) {
                     payment = false;

@@ -9,8 +9,8 @@ import model.dto.ScheduleDTO;
 public class ReserveView {
 	public ReserveView(){
 		Scanner sc = new Scanner(System.in);
-		System.out.println("선택지를 입력하세요");
-		System.out.println("1.키워드로 검색\n2.영화 검색\n3.영화관으로 검색\n4.영화목록 보기\n5.스케쥴 목록\n6.나가기");
+		System.out.println("영화를 검색할 방법을 입력하세요");
+		System.out.println("1.키워드로 검색\n2.영화 검색\n3.영화관으로 검색\n4.영화목록 보기\n5.영화 시간표\n6.나가기");
 		int choice = sc.nextInt();
 		if(choice==6) {
 			return;

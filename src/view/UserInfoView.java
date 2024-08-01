@@ -37,7 +37,13 @@ public class UserInfoView {
 		System.out.println("계좌 잔액 : " +balance);
 		System.out.println("==============================");
 		while(true) {
-
+			infodata = ucon.getDetail(loginUser);
+			//돌려받은 HashMap 안에 있는 데이터 꺼내기
+			user = (UserDTO)infodata.get("user");
+			account = (AccountDTO)infodata.get("account");
+			balance 	= (String)infodata.get("balance");
+			reserveCnt	= (Integer)infodata.get("reserveCnt");
+			
 			System.out.println("1. 내 정보 수정\n2. 예약 관리\n3. 계좌 관리\n4. 메인으로\n5. 회원 탈퇴");
 
 			try {
@@ -46,9 +52,6 @@ public class UserInfoView {
 					//회원 탈퇴
 					System.out.print("비밀번호 재 입력 : ");
 					String userpw = sc.next();
-
-					infodata = ucon.getDetail(loginUser);
-					user = (UserDTO)infodata.get("user");
 					//비번을 바꾼 경우 데이터베이스의 정보와
 					//현재 메소드의 정보가 틀리기 때문에 다시 불러와야함
 					if(user.getUserPw().equals(userpw)) {
@@ -70,7 +73,6 @@ public class UserInfoView {
 				switch(choice) {
 					case 1:
 
-						//input이랑 반복문 넣어야할듯
 						System.out.println("수정할 정보를 입력하세요");
 						System.out.println("1.비밀번호 수정\n2.핸드폰 번호\n3.주소");
 						choice = sc.nextInt();
@@ -91,7 +93,6 @@ public class UserInfoView {
 						new UserReserveView();
 						break;
 					case 3:
-						//input이랑 반복문 넣어야할듯
 						System.out.println("계좌번호 : "+account.getAccountId());
 						System.out.println("은행 : "+account.getBank());
 						System.out.println("잔액 : "+account.getBalance());
@@ -103,6 +104,7 @@ public class UserInfoView {
 							int money = sc.nextInt();
 							if(ucon.depositMoney(money+Integer.parseInt(balance))) {
 								System.out.println("충전에 성공하였습니다");
+								
 							}
 							else {
 								System.out.println("실패했습니다");

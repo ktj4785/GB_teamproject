@@ -38,7 +38,6 @@ public class MovieListView {
 			System.out.println("예약하실 영화의 번호를 입력해주세요: ");
 			sc.nextLine();
 			int choice2 = sc.nextInt();
-			System.out.println("무비 아이디:"+(list.get(choice2-1)).getMovieId());
 			new MovieReserveView((list.get(choice2-1)).getMovieId(),null,null);
 			//나중에 해당 아이디를 넘겨주기
 		}

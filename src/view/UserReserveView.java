@@ -42,21 +42,20 @@ public class UserReserveView {
 			return;
 		}
 		if (choice==1) {
-			System.out.println("예약을 취소하시겠습니까?\n 1.예 2.아니오");
-			int choice2 = sc.nextInt();
-			if(choice2==1) {
-				System.out.println("최소할 예약의 번호를 입력하세요");
-				int select = sc.nextInt();
-				ReserveController rcon = new ReserveController();
-				if(rcon.deleteReserve(list.get(select-1),Integer.parseInt(balance))) {
-					System.out.println("예약이 취소되었습니다");
-					return;
-				}
-				
-			}
-			else if(choice2==2) {
+			System.out.println("최소할 예약의 번호를 입력하세요 (0번을 누르시면 회원 메뉴로 나갑니다)");
+			int select = sc.nextInt();
+			if(select==0) {
 				return;
 			}
+			ReserveController rcon = new ReserveController();
+			if(rcon.deleteReserve(list.get(select-1),Integer.parseInt(balance))) {
+				System.out.println("예약이 취소되었습니다");
+				return;
+			}
+			else {
+				System.out.println("오류가 발생하였습니다");
+			}
+				
 		}
 		if (choice==2) {
 			System.out.println("결제할 예약의 번호를 입력하세요");
@@ -80,7 +79,6 @@ public class UserReserveView {
 				System.out.println("이미 결제하신 예약입니다");
 				return;
 			}
-//				Integer.parseInt(balance)
 		}
 	}
 }
