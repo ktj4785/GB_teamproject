@@ -112,7 +112,7 @@ public class MovieReserveView {
                 System.out.print("예약하실 좌석의 행을 입력해 주세요: ");
                 String seatLine = sc.next().toUpperCase();
                 if(seatLine.charAt(0)-65>=seatList.size()|| seatLine.length()>1) {
-                	System.out.println("없는 열이거나 잘못된 입력입니다.");
+                	System.out.println("존재하지 않는 행이거나 잘못된 입력입니다.");
                     i--;
                     continue;
                 }
@@ -120,7 +120,7 @@ public class MovieReserveView {
                 int seatRow = sc.nextInt();
                 int row=Integer.parseInt(seatList.get(seatLine.charAt(0) - 65).getSeatLine())  ;
                 if(seatRow>row) {
-                	System.out.println("없는 행입니다.");
+                	System.out.println("존재하지 않는 좌석 번호입니다.");
                     i--;
                     continue;
                 }
