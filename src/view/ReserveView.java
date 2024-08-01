@@ -4,34 +4,43 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.ReserveController;
-import model.dto.MovieDTO;
+import model.dto.ScheduleDTO;
 
 public class ReserveView {
-	public ReserveView() {
+	public ReserveView(){
 		Scanner sc = new Scanner(System.in);
-		System.out.print("예약하실 영화 검색 : ");
-		String keyword = sc.nextLine();
-
-		ReserveController controller = new ReserveController();
-		ArrayList<MovieDTO> mList = controller.searchMovieList(keyword);
-		int count = 1;
-		System.out.println("\""+keyword+"\" 로 검색된 결과");
-		if(mList == null) {
-			System.out.println("검색된 결과가 없습니다.");
+		System.out.println("선택지를 입력하세요");
+		System.out.println("1.키워드로 검색\n2.영화 검색\n3.영화관으로 검색\n4.영화목록 보기\n5.스케쥴 목록\n6.나가기");
+		int choice = sc.nextInt();
+		if(choice==6) {
+			return;
 		}
-		else {
-			for(MovieDTO movie : mList) {
-				System.out.printf("%d번 제목 : %s | 감독 : %s | 상영시간 : %s | 장르 : %s | 평점 : %f점\n",
-						count, movie.getMovieName(), movie.getDirector(),
-						movie.getRunningTime(), movie.getGenre(), movie.getScore());
-				count++;
-			}
-			System.out.println("===============================");
-			System.out.println("예약하실 영화 번호 입력(나가시려면 0번을 입력하세요) : ");
-			int movieId = sc.nextInt();
-			if(movieId != 0) {
-				new MovieReserveView(mList.get(movieId-1).getMovieId(),null);
-			}
+		switch(choice) {
+			case 1:
+				new KeywordSearchView();
+				break;
+			case 2:
+				new MovieSearchView();	
+				break;
+			case 3:
+				new TheaterSearchView();
+				break;
+			case 4:
+				new MovieListView();
+				break;
+			case 5:
+				ReserveController rcon = new ReserveController();
+				ArrayList<ScheduleDTO> list = rcon.getSchedule();
+				int count = 1;
+				for(ScheduleDTO schedule : list) {
+					System.out.printf("%d번 | 제목 : %s | 시작시간 : %s | 남은 좌석 : %d석 | 영화관 : %s\n",
+							count,schedule.getMovieName(),schedule.getStartTime(),
+							schedule.getLeftSeat(),schedule.getTheaterName());
+					count++;
+				}
+				System.out.println("예약할 영화의 번호를 고르세요");
+				int choice2 = sc.nextInt();
+				new MovieReserveView(null,null,list.get(choice2-1).getScheduleId());
 		}
 	}
 }

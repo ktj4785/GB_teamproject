@@ -82,6 +82,12 @@ public class ReserveController {
 		ScheduleDAO sdao = new ScheduleDAO();
 		return sdao.getScheduleByScheduleId(scheduleId);
 	}
+	
+	public ArrayList<ScheduleDTO> getSchedule() {
+		ScheduleDAO sdao = new ScheduleDAO();
+		ArrayList<ScheduleDTO> list = sdao.getScheduleAll();
+		return list;
+	}
 
 	public TheaterDTO getTheaterByScheduleId(int theaterId) {
 		TheaterDAO tdao = new TheaterDAO();
@@ -147,7 +153,7 @@ public class ReserveController {
 		HashMap<String, Object> scheduleList = new HashMap<>();
 
 		ArrayList<ScheduleDTO> list = sdao.getScheduleByTheaterId(theaterId); 
-
+		
 		ArrayList<Integer> idList = new ArrayList<>();
 		for(ScheduleDTO schedule : list) {
 			idList.add(schedule.getMovieId());

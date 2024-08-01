@@ -43,7 +43,7 @@ public class TheaterSearchView {
 			return;
 		}
 		else{
-			new MovieReserveView(null,theaterList.get(choice-1).getTheaterId());	
+			new MovieReserveView(null,theaterList.get(choice-1).getTheaterId(),null);	
 		}
 		
 	}

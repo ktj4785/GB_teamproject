@@ -32,16 +32,36 @@ public class ScheduleDTO {
 		this.movieId = movieId;
 	}
 
+	
+	public ScheduleDTO(int scheduleId, Timestamp startTime, Timestamp endTime, int leftSeat,int movieId, String movieName,
+			int theaterId,String theaterName) {
+		this.scheduleId = scheduleId;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.leftSeat = leftSeat;
+		this.movieId = movieId;
+		this.movieName = movieName;
+		this.theaterId = theaterId;
+		this.theaterName = theaterName;
+	
+	}
 
-	public ScheduleDTO(String movieName, String director, String runningTime, String genre, Double avgScore) {
+
+	public ScheduleDTO(int scheduleId,Timestamp startTime,int leftSeat, String theaterName ,String movieName, String director, String runningTime, String genre, Double avgScore) {
+		this.scheduleId = scheduleId;
+		this.startTime = startTime;
+		this.leftSeat = leftSeat;
+		this.theaterName = theaterName;
 		this.movieName = movieName;
 		this.director = director;
 		this.runningTime = runningTime;
 		this.genre = genre;
 		this.avgScore = avgScore;
 	}
+	
 
-	public ScheduleDTO(String movieName, String theaterName, String dimension, Timestamp startTime, int leftSeat) {
+	public ScheduleDTO(int scheduleId,String movieName, String theaterName, String dimension, Timestamp startTime, int leftSeat) {
+		this.scheduleId = scheduleId;
 		this.startTime = startTime;
 		this.leftSeat = leftSeat;
 		this.movieName = movieName;
@@ -49,8 +69,9 @@ public class ScheduleDTO {
 		this.dimension = dimension;
 	}
 
-	public ScheduleDTO(String movieName,String director,Timestamp startTime,String runningTime,String genre, int leftSeat) 
+	public ScheduleDTO(int scheduleId,String movieName,String director,Timestamp startTime,String runningTime,String genre, int leftSeat) 
 	{
+		this.scheduleId = scheduleId;
 		this.startTime = startTime;
 		this.leftSeat = leftSeat;
 		this.movieName = movieName;
@@ -60,7 +81,8 @@ public class ScheduleDTO {
 	}
     
     
-	public ScheduleDTO(String theaterName, String dimension, String movieName, Timestamp startTime, int leftSeat, String genre, String runningTime) {
+	public ScheduleDTO(int scheduleId,String theaterName, String dimension, String movieName, Timestamp startTime, int leftSeat, String genre, String runningTime) {
+		this.scheduleId = scheduleId;
 		this.startTime = startTime;
 		this.leftSeat = leftSeat;
 		this.movieName = movieName;

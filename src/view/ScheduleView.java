@@ -15,7 +15,7 @@ public class ScheduleView {
 	public ScheduleView() {
 		Scanner sc = new Scanner(System.in);
 		MovieController controller = new MovieController();
-		
+		int count;
 		System.out.println("==== 상영시간표 ====");
 		System.out.print("1.영화별 조회\n2.시간별 조회\n3.영화관별 조회");
 		int choice = sc.nextInt();
@@ -26,34 +26,50 @@ public class ScheduleView {
 		
 		if(list == null || list.isEmpty()) {
 			System.out.println("검색된 결과가 없습니다.");
-		} else {
+			} 
+		else {
 			System.out.println("--- 검색결과 ---");
+			count = 1;
 			switch(choice) {
-			case 1:
-				for(ScheduleDTO sd : list) {
-					System.out.printf("%-20s\t| %-10s\t| %-5s| %-15s\t| %.1f\n", 
-							sd.getMovieName(), sd.getDirector(), sd.getRunningTime(), sd.getGenre(), sd.getAvgScore());
+				case 1:
+					
+					for(ScheduleDTO sd : list) {
+						System.out.printf("%-3d | %-10s\t| %-7s| %-5s | %-5s\t| %.1f|%s| %s | %d\n", 
+								count, sd.getMovieName(), sd.getDirector(), sd.getRunningTime(), sd.getGenre(), sd.getAvgScore(),sd.getStartTime(),sd.getTheaterName(), sd.getLeftSeat());
+							count++;
+						}
+					break;
+				case 2:
+					for(ScheduleDTO sd : list) {
+						System.out.printf("%-3d |%-8s\t| %s | %s | %s | 잔여%5d석\n",
+								count, sd.getMovieName(), sd.getTheaterName(), sd.getDimension()+"D", sd.getStartTime().toString(), sd.getLeftSeat());
+							count++;
+						}
+					break;
+				case 3:
+					for(ScheduleDTO sd : list) {
+			        		System.out.printf("%-3d | %s | %sD | %-10s\t| %s | 잔여 %5d석 | %-8s\t| %s\n",
+			        			count, sd.getTheaterName(), sd.getDimension(), sd.getMovieName(), sd.getStartTime().toString(), sd.getLeftSeat(), sd.getGenre(), sd.getRunningTime());
+			        		count++;
+						}
+					break;
+					
+				default:
+						System.out.println("잘못된 선택입니다.");
+				return;
 				}
-				break;
-			case 2:
-				for(ScheduleDTO sd : list) {
-					System.out.printf("%-20s\t| %s | %s | %s | 잔여%5d석\n",
-							sd.getMovieName(), sd.getTheaterName(), sd.getDimension()+"D", sd.getStartTime().toString(), sd.getLeftSeat());
+			System.out.println("예약하시려면 번호를 고르세요(나가시려면 0번을 누르세요)");
+			int choice2 = sc.nextInt();
+			if(choice2==0) {
+				return;
 				}
-				break;
-			case 3:
-				 for(ScheduleDTO sd : list) {
-		               System.out.printf("%s | %s | %-20s\t| %s | 잔여 %5d석 | %-18s\t| %s\n",
-		                     sd.getTheaterName(), sd.getDimension()+"D", sd.getMovieName(), sd.getStartTime().toString(), sd.getLeftSeat(), sd.getGenre(), sd.getRunningTime());
-		            }
-				break;
-				
-			default:
-					System.out.println("잘못된 선택입니다.");
-			break;
+			else {
+				new MovieReserveView(null, null, list.get(choice2-1).getScheduleId());
+				}
 			}
+			
+			
 		}
-		System.out.println();
 		
-	}
+	
 }

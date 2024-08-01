@@ -44,7 +44,7 @@ public class MovieSearchView {
 				System.out.println("예약하실 영화의 번호를 입력해주세요: ");
 				sc.nextLine();
 				int choice2 = sc.nextInt();
-				new MovieReserveView((list.get(choice2-1)).getMovieId(),null);
+				new MovieReserveView((list.get(choice2-1)).getMovieId(),null,null);
 				break;
 			}
 			else if(choice1 == 1){
@@ -81,7 +81,7 @@ public class MovieSearchView {
 					System.out.println("예약하실 영화의 번호를 입력해주세요: ");
 					sc.nextLine();
 					int choice3 = sc.nextInt();
-					new MovieReserveView((list2.get(choice3-1)).getMovieId(),null);
+					new MovieReserveView((list2.get(choice3-1)).getMovieId(),null,null);
 					break;
 				}
 				else if(choice2 == 1){
@@ -116,7 +116,7 @@ public class MovieSearchView {
 				System.out.println("예약하실 영화의 번호를 입력해주세요: ");
 				sc.nextLine();
 				int choice4 = sc.nextInt();
-				new MovieReserveView((list3.get(choice4-1)).getMovieId(),null);
+				new MovieReserveView((list3.get(choice4-1)).getMovieId(),null,null);
 				break;
 			}
 			else if(choice3 == 1){

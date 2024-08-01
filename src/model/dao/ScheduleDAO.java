@@ -33,6 +33,7 @@ public class ScheduleDAO {
 		case 1:
 			order_col = "movieName";
 	        sql = "SELECT "
+	        		+ "s.scheduleId, s.startTime, s.leftSeat,t.theaterName, "
 	                + "mt.movieName, "
 	                + "mt.director, "
 	                + "mt.runningTime, "
@@ -40,17 +41,19 @@ public class ScheduleDAO {
 	                + "FORMAT(AVG(r.grade), 1) AS avgScore "
 	                + "FROM movie mt "
 	                + "JOIN review r USING(movieId) "
-	                + "GROUP BY mt.movieId, mt.movieName, mt.director, mt.runningTime, mt.genre "
+	                + "JOIN schedule s on s.movieId = mt.movieId "
+	                + "JOIN theater t on s.theaterId = t.theaterId "
+	                + "GROUP BY s.scheduleId,t.theaterName, s.startTime, s.leftSeat, mt.movieId, mt.movieName, mt.director, mt.runningTime, mt.genre "
 	                + "ORDER BY " + order_col;
 			break;
 			
 		case 2:
 			order_col = "s.startTime";
-			sql = "select m.movieName, t.theaterName, t.dimension, s.startTime, s.leftSeat from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
+			sql = "select s.scheduleId, m.movieName, t.theaterName, t.dimension, s.startTime, s.leftSeat from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
 			break;
 		case 3:
 			order_col = "t.theaterName";
-	        sql = "select t.theaterName, t.dimension, m.movieName, s.startTime, s.leftSeat, m.genre, m.runningTime from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
+	        sql = "select s.scheduleId, t.theaterName, t.dimension, m.movieName, s.startTime, s.leftSeat, m.genre, m.runningTime from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId order by " + order_col;
 	        break;
 		}
 		
@@ -69,6 +72,10 @@ public class ScheduleDAO {
                 if (choice == 1) {
                     // choice가 1일 때에 맞는 생성자 사용
                     schedule = new ScheduleDTO(
+                    		rs.getInt("scheduleId"),
+                    		rs.getTimestamp("startTime"),
+                    		rs.getInt("leftSeat"),
+                    		rs.getString("theaterName"),
                             rs.getString("movieName"),
                             rs.getString("director"),
                             rs.getString("runningTime"),
@@ -77,6 +84,7 @@ public class ScheduleDAO {
                     );
                 } else if (choice == 2) {
                     schedule = new ScheduleDTO(
+                    		rs.getInt("scheduleId"),
                     		rs.getString("movieName"),
                             rs.getString("theaterName"),
                             rs.getString("dimension"),
@@ -85,6 +93,7 @@ public class ScheduleDAO {
                     );
                 } else if (choice == 3){
                     schedule = new ScheduleDTO(
+                    		rs.getInt("scheduleId"),
                     		rs.getString("theaterName"),
                     		rs.getString("dimension"),
                             rs.getString("movieName"),
@@ -161,7 +170,45 @@ public class ScheduleDAO {
 			return list;
 		}
 	}
+//	" order by " + order_col;
+//	break;
+	
+	
+	public ArrayList<ScheduleDTO> getScheduleAll() {
+		ArrayList<ScheduleDTO> list = new ArrayList<>();
 
+		String sql = "select s.scheduleId, s.startTime, s.endTime, s.leftSeat, m.movieId, m.movieName, t.theaterId, t.theaterName from schedule s join movie m on s.movieId = m.movieId join theater t on s.theaterId = t.theaterId";
+
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				ScheduleDTO schedule = new ScheduleDTO(
+						rs.getInt("scheduleId"),
+						rs.getTimestamp("startTime"),
+						rs.getTimestamp("endTime"),
+						rs.getInt("leftSeat"),
+						rs.getInt("movieId"),
+						rs.getString("movieName"),
+						rs.getInt("theaterId"),
+						rs.getString("theaterName")
+				);
+				list.add(schedule);
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		if(list.size() == 0) {
+			return null;
+		}
+		else {
+			return list;
+		}
+	}
+	
+	
+	
 	public ScheduleDTO getScheduleByScheduleId(int scheduleId) {
 		String sql = "select * from schedule where scheduleId = " +scheduleId;
 
